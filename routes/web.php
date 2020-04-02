@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'IndexController@index')->name('front.index.index');
 
+// Contact Controller
+Route::prefix('/contact')->group(function () {
+    
+    Route::get('/', 'ContactController@index')->name('front.contact.index');
+    Route::post('/send-email', 'ContactController@sendEmail')->name('front.contact.send_email');
+});
+
 
 Auth::routes();
 

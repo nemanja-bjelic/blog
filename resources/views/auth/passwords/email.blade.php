@@ -10,6 +10,11 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
+        @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+        @endif
       <p class="login-box-msg">@lang('You forgot your password? Here you can easily retrieve a new password.')</p>
 
       <form method="POST" action="{{ route('password.email') }}">

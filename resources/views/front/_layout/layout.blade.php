@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bootstrap Blog - B4 Template by Bootstrap Temple</title>
+    <title>@yield('seo_title') - Blog</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{url('/themes/front/css/style.default.css')}}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="{{url('/themes/front/css/custom.css')}}">
+    <link href="{{url('/themes/front/plugins/toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
     <!-- Favicon-->
     <link rel="shortcut icon" href="favicon.png">
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
@@ -49,10 +50,26 @@
     <script src="{{url('/themes/front/vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
     <script src="{{url('/themes/front/vendor/@fancyapps/fancybox/jquery.fancybox.min.js')}}"></script>
     <script src="{{url('/themes/front/js/front.js')}}"></script>
+    <script src="{{url('/themes/front/plugins/toastr/toastr.min.js')}})" type="text/javascript"></script>
+    <script>
+        let systemMessage = "{{session()->pull('system_message')}}";
 
+      if (systemMessage !== "") {
+          toastr.success(systemMessage);
+      }
 
+      let systemError = "{{session()->pull('system_error')}}";
+
+      if (systemError !== "") {
+          toastr.error(systemError);
+      }
+    </script>
     <script src="{{url('/themes/front/plugins/owl-carousel2/owl.carousel.min.js')}}"></script>
     <script>
+        
+        
+        
+        
       $("#index-slider").owlCarousel({
         "items": 1,
         "loop": true,
