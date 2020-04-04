@@ -1,5 +1,5 @@
 @extends('admin._layout.layout')
-
+@section('seo_title', __('Slider'))
 @section('content')
 
 <!-- Content Wrapper. Contains page content -->

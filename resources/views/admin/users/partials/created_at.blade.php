@@ -1,0 +1,1 @@
+<td class="text-center">{{$user->created_at}}</td>

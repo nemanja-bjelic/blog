@@ -30,7 +30,7 @@
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-user"></i> Your Profile
+            <i class="fas fa-user"></i> @lang('Your Profile')
           </a>
           <div class="dropdown-divider"></div>
           <a 

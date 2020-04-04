@@ -31,12 +31,13 @@
                             <span class="fas fa-envelope"></span>
                         </div>
                     </div>
-                </div>
-                @error('email')
+                    @error('email')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
                 @enderror
+                </div>
+                
                 <div class="input-group mb-3">
                     <input 
                         type="password" 
@@ -51,12 +52,13 @@
                             <span class="fas fa-lock"></span>
                         </div>
                     </div>
-                </div>
-                @error('password')
+                    @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
                 @enderror
+                </div>
+                
                 <div class="row">
                     <div class="col-8">
                         <div class="icheck-primary">

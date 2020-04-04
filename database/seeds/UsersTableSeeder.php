@@ -15,6 +15,7 @@ class UsersTableSeeder extends Seeder
         
         \DB::table('users')->insert([
             'name' => 'Nemanja Bjelic',
+            'phone' => '+381641112223',
             'email' => 'nemanja.bjelic353@gmail.com',
             'password' => Hash::make('cubesphp'),
             'created_at' => date('Y-m-d H:i:s'),
@@ -23,6 +24,7 @@ class UsersTableSeeder extends Seeder
         
         \DB::table('users')->insert([
             'name' => 'Petar Petrovic',
+            'phone' => '+381641112223',
             'email' => 'petar.petrovic@cubes.rs',
             'password' => Hash::make('cubesphp'),
             'created_at' => date('Y-m-d H:i:s'),

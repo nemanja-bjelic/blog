@@ -29,6 +29,7 @@ Auth::routes();
 Route::prefix('/admin')->namespace('Admin')->middleware('auth')->group(function () {
     Route::get('/', 'IndexController@index')->name('admin.index.index');
     
+    // Sliders Controller
     Route::prefix('/sliders')->group(function () {
         Route::get('/', 'SlidersController@index')->name('admin.sliders.index');
         Route::get('/add', 'SlidersController@add')->name('admin.sliders.add');
@@ -42,5 +43,20 @@ Route::prefix('/admin')->namespace('Admin')->middleware('auth')->group(function 
         Route::post('/change-priority', 'SlidersController@changePriority')->name('admin.sliders.change_priority');
         
         Route::get('/slider-table', 'SlidersController@sliderTable')->name('admin.sliders.slider_table');
+    });
+    
+    // Users Controller
+    Route::prefix('/users')->group(function () {
+        Route::get('/', 'UsersController@index')->name('admin.users.index');
+        Route::get('/add', 'UsersController@add')->name('admin.users.add');
+        Route::post('/insert', 'UsersController@insert')->name('admin.users.insert');
+        Route::get('/edit/{user}', 'UsersController@edit')->name('admin.users.edit');
+        Route::post('/update{user}', 'UsersController@update')->name('admin.users.update');
+        
+        Route::post('/enable', 'UsersController@enable')->name('admin.users.enable');
+        Route::post('/disable', 'UsersController@disable')->name('admin.users.disable');
+        Route::post('/delete-photo/{user}', 'UsersController@deletePhoto')->name('admin.users.delete_photo');
+        
+        Route::post('/datatable', 'UsersController@datatable')->name('admin.users.datatable');
     });
 });

@@ -9,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>AdminLTE 3 | Starter</title>
+  <title>@yield('seo_title') | Blog</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{url('/themes/admin/plugins/fontawesome-free/css/all.min.css')}}">
@@ -54,6 +54,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- Datatables -->
 <script src="{{url('/themes/admin/plugins/datatables/jquery.dataTables.min.js')}}" type="text/javascript"></script>
 <script src="{{url('/themes/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}" type="text/javascript"></script>
+
 <script type="text/javascript">
     let systemMessage = "{{session()->pull('system_message')}}";
     

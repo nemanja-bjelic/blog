@@ -1,6 +1,6 @@
 @extends('admin._layout.layout')
 
-@section('seo_title', 'Admin Page')
+@section('seo_title', __('Admin Page'))
 
 @section('content')
 <!-- Content Wrapper. Contains page content -->

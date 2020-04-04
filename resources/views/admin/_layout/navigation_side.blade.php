@@ -19,7 +19,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon far fa-plus-square"></i>
                         <p>
-                            Sliders
+                            @lang('Sliders')
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -27,13 +27,36 @@
                         <li class="nav-item">
                             <a href="{{route('admin.sliders.index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Sliders list</p>
+                                <p>@lang('Sliders list')</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('admin.sliders.add')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Add Slider</p>
+                                <p>@lang('Add Slider')</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-plus-square"></i>
+                        <p>
+                            @lang('Users')
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.users.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>@lang('Users List')</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.users.add')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>@lang('Add User')</p>
                             </a>
                         </li>
                     </ul>

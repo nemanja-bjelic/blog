@@ -1,5 +1,5 @@
 @extends('admin._layout.layout')
-
+@section('seo_title', __('Add Slider'))
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -131,10 +131,16 @@
                 "required": true
             }
         },
-        "errorPlacement": function (error, element) {
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
             error.addClass('text-danger');
-            error.insertAfter(element);
-            //element.addClass('is-invalid');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
         }
     });
     
