@@ -1,6 +1,6 @@
 @extends('front._layout.layout')
 
-@section('seo_title', __('Contact Page'))
+@section('seo_title', __('Blog Contact Page'))
 
 @section('content')
 <!-- Hero Section -->

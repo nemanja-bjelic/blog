@@ -36,7 +36,7 @@ class ContactFormMail extends Mailable
      */
     public function build()
     {
-         $this->from('nemanja.bjelic353@gmail.com', $this->contactName)
+         $this->from(config('mail.mailers.smtp.username'), $this->contactName)
             ->replyTo($this->contactEmail)
             ->subject('New message from contact form on website Blog');
         

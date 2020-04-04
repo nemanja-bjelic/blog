@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{url('/themes/front/css/custom.css')}}">
     <link href="{{url('/themes/front/plugins/toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
     <!-- Favicon-->
-    <link rel="shortcut icon" href="favicon.png">
+    <link rel="shortcut icon" href="{{url('/themes/front/img/favicon.ico')}}">
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
@@ -50,25 +50,16 @@
     <script src="{{url('/themes/front/vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
     <script src="{{url('/themes/front/vendor/@fancyapps/fancybox/jquery.fancybox.min.js')}}"></script>
     <script src="{{url('/themes/front/js/front.js')}}"></script>
-    <script src="{{url('/themes/front/plugins/toastr/toastr.min.js')}})" type="text/javascript"></script>
+    <script src="{{url('/themes/front/plugins/toastr/toastr.min.js')}}" type="text/javascript"></script>
     <script>
         let systemMessage = "{{session()->pull('system_message')}}";
 
       if (systemMessage !== "") {
           toastr.success(systemMessage);
       }
-
-      let systemError = "{{session()->pull('system_error')}}";
-
-      if (systemError !== "") {
-          toastr.error(systemError);
-      }
     </script>
     <script src="{{url('/themes/front/plugins/owl-carousel2/owl.carousel.min.js')}}"></script>
     <script>
-        
-        
-        
         
       $("#index-slider").owlCarousel({
         "items": 1,
@@ -84,6 +75,6 @@
         "autoplayHoverPause": true
       });
     </script>
-    
+    @stack('footer_javascript')
   </body>
 </html>

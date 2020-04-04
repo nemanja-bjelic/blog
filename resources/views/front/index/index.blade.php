@@ -1,40 +1,22 @@
 @extends('front._layout.layout')
 
-@section('seo_title', 'Home Page')
+@section('seo_title', __('Blog Home Page'))
 
 @section('content')
 <!-- Hero Section-->
 <div id="index-slider" class="owl-carousel">
-    <section style="background: url(/themes/front/img/featured-pic-1.jpeg); background-size: cover; background-position: center center" class="hero">
+    @foreach($sliders as $slider)
+    <section style="background: url({{$slider->getPhotoUrl()}}); background-size: cover; background-position: center center" class="hero">
         <div class="container">
             <div class="row">
                 <div class="col-lg-7">
-                    <h1>Bootstrap 4 Blog - A free template by Bootstrap Temple</h1>
-                    <a href="blog-post.html" class="hero-link">Discover More</a>
+                    <h1>{{$slider->title}}</h1>
+                    <a href="{{$slider->getButtonUrl()}}" class="hero-link">{{$slider->button_title}}</a>
                 </div>
             </div>
         </div>
     </section>
-    <section style="background: url(/themes/front/img/featured-pic-2.jpeg); background-size: cover; background-position: center center" class="hero">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7">
-                    <h1>Bootstrap 4 Blog - Some other title in slide</h1>
-                    <a href="blog-category.html" class="hero-link">Checkout More</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section style="background: url(/themes/front/img/featured-pic-3.jpeg); background-size: cover; background-position: center center" class="hero">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7">
-                    <h1>This is third slide, there will be more!</h1>
-                    <a href="blog-tag.html" class="hero-link">Findout More</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    @endforeach
 </div>
 
 <!-- Intro Section-->
@@ -83,7 +65,7 @@
                         </header>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrude consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
                         <footer class="post-footer d-flex align-items-center"><a href="blog-author.html" class="author d-flex align-items-center flex-wrap">
-                                <div class="avatar"><img src="{{url('/themes/front/img/avatar-2.jpg')}} alt="..." class="img-fluid"></div>
+                                <div class="avatar"><img src="{{url('/themes/front/img/avatar-2.jpg')}}" alt="..." class="img-fluid"></div>
                                 <div class="title"><span>John Doe</span></div></a>
                             <div class="date"><i class="icon-clock"></i> 2 months ago</div>
                             <div class="comments"><i class="icon-comment"></i>12</div>
