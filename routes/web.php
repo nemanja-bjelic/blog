@@ -22,6 +22,12 @@ Route::prefix('/contact')->group(function () {
     Route::post('/send-email', 'ContactController@sendEmail')->name('front.contact.send_email');
 });
 
+// Posts Controller
+Route::prefix('/posts')->group(function () {
+    
+    Route::get('/', 'PostsController@index')->name('front.posts.index');
+}); 
+
 
 Auth::routes();
 

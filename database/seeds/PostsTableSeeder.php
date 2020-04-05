@@ -17,7 +17,7 @@ class PostsTableSeeder extends Seeder
         
         for($i = 0; $i < 20; $i++){
             \DB::table('posts')->insert([
-            'title' => $faker->sentence($nbWords = 5, $variableNbWords = true),
+            'title' => $faker->sentence($nbWords = 3, $variableNbWords = true),
             'photo' => '/themes/front/img/featured-pic-1.jpeg',
             'description' => $faker->sentence($nbWords = 36, $variableNbWords = true),
             'content' => $faker->paragraph($nbSentences = 6, $variableNbSentences = true),
