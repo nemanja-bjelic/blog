@@ -23,7 +23,6 @@ class CreatePostsTable extends Migration
             $table->boolean('important')->default(1)->comment('Show if column is for index page or not');
             $table->bigInteger('post_category_id')->nullable();
             $table->bigInteger('user_id');
-            $table->bigInteger('post_tags_id');
             $table->integer('visits_number')->nullable()->default(0);
             $table->integer('comments_number')->nullable()->default(0);
             $table->timestamps();

@@ -27,6 +27,7 @@ Route::prefix('/posts')->group(function () {
     
     Route::get('/', 'PostsController@index')->name('front.posts.index');
     Route::get('/category-posts/{postCategory}', 'PostsController@categoryPosts')->name('front.posts.category_posts');
+    Route::get('/tag-posts/{tag}', 'PostsController@tagPosts')->name('front.posts.tag_posts');
 }); 
 
 

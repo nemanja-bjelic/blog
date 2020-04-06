@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Post;
 use App\Models\PostCategory;
+use App\Models\Tag;
 
 class PostsController extends Controller
 {
@@ -32,10 +33,17 @@ class PostsController extends Controller
                 ->get()
                 ;
         
+        $tags = Tag::query()
+                ->withCount('posts')
+                ->orderBy('posts_count', 'desc')
+                ->get()
+                ;
+        
         return view('front.posts.index',[
             'posts' => $posts,
             'latestPosts' => $latestPosts,
-            'postCategories' => $postCategories
+            'postCategories' => $postCategories,
+            'tags' => $tags
         ]);
     }
     
@@ -61,11 +69,28 @@ class PostsController extends Controller
                 ->get()
                 ;
         
+        
+        $tags = Tag::query()
+                ->withCount('posts')
+                ->orderBy('posts_count', 'desc')
+                ->get()
+                ;
+        
         return view('front.posts.category_posts', [
             'posts' => $posts,
             'postCategory' => $postCategory,
             'postCategories' => $postCategories,
-            'latestPosts' => $latestPosts
+            'latestPosts' => $latestPosts,
+            'tags' => $tags,
+        ]);
+    }
+    
+    public function tagPosts (Request $request, Tag $tag)
+    {
+        
+        
+        return view('front.posts.tag_posts', [
+            'tag' => $tag
         ]);
     }
 }
