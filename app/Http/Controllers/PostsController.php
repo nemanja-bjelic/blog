@@ -38,4 +38,34 @@ class PostsController extends Controller
             'postCategories' => $postCategories
         ]);
     }
+    
+    public function categoryPosts (Request $request, PostCategory $postCategory)
+    {
+        $posts = Post::query()
+                ->where('post_category_id', $postCategory->id)
+                ->with(['postCategory', 'user'])
+                ->orderBy('created_at', 'desc')
+                ->paginate(12)
+                ;
+        
+        $postCategories = PostCategory::query()
+                ->orderBy('priority')
+                ->withCount(['posts'])
+                ->get()
+                ;
+        
+        $latestPosts = Post::query()
+                ->with('postCategory', 'user')
+                ->orderBy('created_at')
+                ->limit(3)
+                ->get()
+                ;
+        
+        return view('front.posts.category_posts', [
+            'posts' => $posts,
+            'postCategory' => $postCategory,
+            'postCategories' => $postCategories,
+            'latestPosts' => $latestPosts
+        ]);
+    }
 }

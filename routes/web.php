@@ -26,6 +26,7 @@ Route::prefix('/contact')->group(function () {
 Route::prefix('/posts')->group(function () {
     
     Route::get('/', 'PostsController@index')->name('front.posts.index');
+    Route::get('/category-posts/{postCategory}', 'PostsController@categoryPosts')->name('front.posts.category_posts');
 }); 
 
 
