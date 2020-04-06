@@ -87,8 +87,7 @@
                         <div class="card-body">
 
                             <table id="entities-list-table" class="table table-bordered">
-                                <thead>                  
-                                    <tr>
+                                <thead> 
                                     <tr>
                                         <th style="width: 10px">#</th>
                                         <th style="width: 20px">@lang('Status')</th>
@@ -99,10 +98,9 @@
                                         <th class="text-center">@lang('Created At')</th>
                                         <th class="text-center">@lang('Actions')</th>
                                     </tr>
-                                    </tr>
                                 </thead>
                                 <tbody>
-                                    
+
                                 </tbody>
                             </table>
                         </div>
@@ -188,16 +186,16 @@
 @push('footer_javascript')
 
 <script type="text/javascript">
-    
-    $('#entities-filter-form [name]').on('change keyup', function (e) {
-		$('#entities-filter-form').trigger('submit');
-	});
-    
-    $('#entities-filter-form').on('submit', function (e) {
-		e.preventDefault();
 
-		entitiesDataTable.ajax.reload(null, true);
-	});
+    $('#entities-filter-form [name]').on('change keyup', function (e) {
+        $('#entities-filter-form').trigger('submit');
+    });
+
+    $('#entities-filter-form').on('submit', function (e) {
+        e.preventDefault();
+
+        entitiesDataTable.ajax.reload(null, true);
+    });
 
     let entitiesDataTable = $('#entities-list-table').DataTable({
         "serverSide": true,
@@ -205,15 +203,15 @@
             "url": "{{route('admin.users.datatable')}}",
             "type": "post",
             "data": function (dtData) {
-                    dtData["_token"] = "{{csrf_token()}}";
+                dtData["_token"] = "{{csrf_token()}}";
 
-                    dtData["status"] = $('#entities-filter-form [name="status"]').val();
-                    dtData["email"] = $('#entities-filter-form [name="email"]').val();
-                    dtData["name"] = $('#entities-filter-form [name="name"]').val();
-                    dtData["phone"] = $('#entities-filter-form [name="phone"]').val();
+                dtData["status"] = $('#entities-filter-form [name="status"]').val();
+                dtData["email"] = $('#entities-filter-form [name="email"]').val();
+                dtData["name"] = $('#entities-filter-form [name="name"]').val();
+                dtData["phone"] = $('#entities-filter-form [name="phone"]').val();
             }
         },
-        "lengthMenu":[5, 10, 15],
+        "lengthMenu": [5, 10, 15],
         "columns": [
             {"name": "id", "data": "id"},
             {"name": "status", "data": "status", "orderable": false, "searchable": false},
@@ -225,72 +223,72 @@
             {"name": "actions", "data": "actions", "orderable": false, "searchable": false},
         ]
     });
-    
-    
-    
+
+
+
     // enable user
     $('#entities-list-table').on('click', '[data-action="enable"]', function (e) {
-		
-		let id = $(this).attr('data-id');
-		let name = $(this).attr('data-name');
 
-		$('#enable-modal [name="id"]').val(id);
-		$('#enable-modal [data-container="name"]').html(name);
-	});
+        let id = $(this).attr('data-id');
+        let name = $(this).attr('data-name');
 
-	$('#enable-modal').on('submit', function (e) {
-		e.preventDefault();
+        $('#enable-modal [name="id"]').val(id);
+        $('#enable-modal [data-container="name"]').html(name);
+    });
 
-		$(this).modal('hide');
+    $('#enable-modal').on('submit', function (e) {
+        e.preventDefault();
 
-		$.ajax({
-			"url": $(this).attr('action'),
-			"type": "post",
-			"data": $(this).serialize()
-		}).done(function (response) {
+        $(this).modal('hide');
 
-			toastr.success(response.system_message);
+        $.ajax({
+            "url": $(this).attr('action'),
+            "type": "post",
+            "data": $(this).serialize()
+        }).done(function (response) {
 
-			entitiesDataTable.ajax.reload(null, false);
+            toastr.success(response.system_message);
 
-		}).fail(function () {
-			
-			
-			toastr.error('Error while enabling user');
-		});
-	});
-    
+            entitiesDataTable.ajax.reload(null, false);
+
+        }).fail(function () {
+
+
+            toastr.error('Error while enabling user');
+        });
+    });
+
     // disable user
     $('#entities-list-table').on('click', '[data-action="disable"]', function (e) {
-		
-		let id = $(this).attr('data-id');
-		let name = $(this).attr('data-name');
 
-		$('#disable-modal [name="id"]').val(id);
-		$('#disable-modal [data-container="name"]').html(name);
-	});
+        let id = $(this).attr('data-id');
+        let name = $(this).attr('data-name');
 
-	$('#disable-modal').on('submit', function (e) {
-		e.preventDefault();
+        $('#disable-modal [name="id"]').val(id);
+        $('#disable-modal [data-container="name"]').html(name);
+    });
 
-		$(this).modal('hide');
+    $('#disable-modal').on('submit', function (e) {
+        e.preventDefault();
 
-		$.ajax({
-			"url": $(this).attr('action'),
-			"type": "post",
-			"data": $(this).serialize()
-		}).done(function (response) {
+        $(this).modal('hide');
 
-			toastr.success(response.system_message);
+        $.ajax({
+            "url": $(this).attr('action'),
+            "type": "post",
+            "data": $(this).serialize()
+        }).done(function (response) {
 
-			entitiesDataTable.ajax.reload(null, false);
+            toastr.success(response.system_message);
 
-		}).fail(function () {
-			
-			
-			toastr.error('Error while disabling user');
-		});
-	});
+            entitiesDataTable.ajax.reload(null, false);
+
+        }).fail(function () {
+
+
+            toastr.error('Error while disabling user');
+        });
+    });
 
 </script>
 

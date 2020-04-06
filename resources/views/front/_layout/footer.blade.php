@@ -23,7 +23,7 @@
                 <div class="menus d-flex">
                     <ul class="list-unstyled">
                         <li> <a href="{{route('front.index.index')}}">@lang('Home')</a></li>
-                        <li> <a href="blog.html">Blog</a></li>
+                        <li> <a href="{{route('front.posts.index')}}">@lang('Blog')</a></li>
                         <li> <a href="{{route('front.contact.index')}}">@lang('Contact')</a></li>
                         <li> <a href="{{route('login')}}">Login</a></li>
                     </ul>

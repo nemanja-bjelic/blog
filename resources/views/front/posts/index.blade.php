@@ -26,8 +26,8 @@
                                     </a>
                                 </div>
                             </div><a href="blog-post.html">
-                                <h3 class="h4">{{Str::limit($post->title, 20)}}</h3></a>
-                            <p class="text-muted">{{Str::limit($post->description, 100)}}</p>
+                                <h3 class="h4">{{$post->title}}</h3></a>
+                                <p class="text-muted">{{$post->description}}</p>
                             <footer class="post-footer d-flex align-items-center"><a href="blog-author.html" class="author d-flex align-items-center flex-wrap">
                                     <div class="avatar"><img src="{{optional($post->user)->getPhotoUrl()}}" alt="..." class="img-fluid"></div>
                                     <div class="title"><span>{{optional($post->user)->name}}</span></div></a>
@@ -48,11 +48,11 @@
             <!-- Widget [Search Bar Widget]-->
             <div class="widget search">
                 <header>
-                    <h3 class="h6">Search the blog</h3>
+                    <h3 class="h6">@lang('Search the blog')</h3>
                 </header>
                 <form action="blog-search.html" class="search-form">
                     <div class="form-group">
-                        <input type="search" placeholder="What are you looking for?">
+                        <input type="search" placeholder="@lang('What are you looking for')?">
                         <button type="submit" class="submit"><i class="icon-search"></i></button>
                     </div>
                 </form>
@@ -60,47 +60,32 @@
             <!-- Widget [Latest Posts Widget]        -->
             <div class="widget latest-posts">
                 <header>
-                    <h3 class="h6">Latest Posts</h3>
+                    <h3 class="h6">@lang('Latest Posts')</h3>
                 </header>
-                <div class="blog-posts"><a href="blog-post.html">
+                <div class="blog-posts">
+                    @foreach($latestPosts as $latestPost)
+                    <a href="blog-post.html">
                         <div class="item d-flex align-items-center">
-                            <div class="image"><img src="img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
-                            <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
+                            <div class="image"><img src="{{$latestPost->getPhotoUrl()}}" alt="{{$latestPost->title}}" class="img-fluid"></div>
+                            <div class="title"><strong>{{$latestPost->title}}</strong>
                                 <div class="d-flex align-items-center">
-                                    <div class="views"><i class="icon-eye"></i> 500</div>
-                                    <div class="comments"><i class="icon-comment"></i>12</div>
+                                    <div class="views"><i class="icon-eye"></i> {{$latestPost->visits_number}}</div>
+                                    <div class="comments"><i class="icon-comment"></i>{{$latestPost->comments_number}}</div>
                                 </div>
                             </div>
-                        </div></a><a href="blog-post.html">
-                        <div class="item d-flex align-items-center">
-                            <div class="image"><img src="img/small-thumbnail-2.jpg" alt="..." class="img-fluid"></div>
-                            <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                                <div class="d-flex align-items-center">
-                                    <div class="views"><i class="icon-eye"></i> 500</div>
-                                    <div class="comments"><i class="icon-comment"></i>12</div>
-                                </div>
-                            </div>
-                        </div></a><a href="blog-post.html">
-                        <div class="item d-flex align-items-center">
-                            <div class="image"><img src="img/small-thumbnail-3.jpg" alt="..." class="img-fluid"></div>
-                            <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                                <div class="d-flex align-items-center">
-                                    <div class="views"><i class="icon-eye"></i> 500</div>
-                                    <div class="comments"><i class="icon-comment"></i>12</div>
-                                </div>
-                            </div>
-                        </div></a></div>
+                        </div>
+                    </a>
+                    @endforeach
+                </div>
             </div>
             <!-- Widget [Categories Widget]-->
             <div class="widget categories">
                 <header>
-                    <h3 class="h6">Categories</h3>
+                    <h3 class="h6">@lang('Categories')</h3>
                 </header>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Growth</a><span>12</span></div>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Local</a><span>25</span></div>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Sales</a><span>8</span></div>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Tips</a><span>17</span></div>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Local</a><span>25</span></div>
+                @foreach($postCategories as $postCategories)
+                <div class="item d-flex justify-content-between"><a href="blog-category.html">{{$postCategories->name}}</a><span>{{$postCategories->posts_count}}</span></div>
+                @endforeach
             </div>
             <!-- Widget [Tags Cloud Widget]-->
             <div class="widget tags">       

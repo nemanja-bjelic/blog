@@ -20,8 +20,22 @@ class PostsController extends Controller
                 ->paginate(12)
                 ;
         
+        $latestPosts = $postsQuery
+                ->orderBy('created_at')
+                ->limit(3)
+                ->get()
+                ;
+        
+        $postCategories = PostCategory::query()
+                ->orderBy('priority')
+                ->withCount(['posts'])
+                ->get()
+                ;
+        
         return view('front.posts.index',[
-            'posts' => $posts
+            'posts' => $posts,
+            'latestPosts' => $latestPosts,
+            'postCategories' => $postCategories
         ]);
     }
 }

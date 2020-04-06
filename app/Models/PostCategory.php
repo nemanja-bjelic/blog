@@ -12,9 +12,9 @@ class PostCategory extends Model
     
     public function posts ()
     {
-        $this->hasMany(
+        return $this->hasMany(
                 Post::class,
-                'posts_category_id',
+                'post_category_id',
                 'id'
                 );
     }
