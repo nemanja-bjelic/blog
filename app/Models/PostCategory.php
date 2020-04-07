@@ -18,4 +18,6 @@ class PostCategory extends Model
                 'id'
                 );
     }
+    
+    
 }

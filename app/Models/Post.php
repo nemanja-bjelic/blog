@@ -42,4 +42,6 @@ class Post extends Model
     {
         return url($this->photo);
     }
+    
+   
 }

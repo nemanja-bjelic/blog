@@ -1,98 +1,51 @@
 @extends('front._layout.layout')
 
-@section('seo_title')
+@section('seo_title', $tag->name)
 
 @section('content')
-
 <div class="container">
     <div class="row">
         <!-- Latest Posts -->
         <main class="posts-listing col-lg-8"> 
             <div class="container">
-                <h2 class="mb-3">Tag "Technology"</h2>
+                <h2 class="mb-3">Tag "{{$tag->name}}"</h2>
                 <div class="row">
+                    @foreach($posts as $post)
                     <!-- post -->
                     <div class="post col-xl-6">
-                        <div class="post-thumbnail"><a href="blog-post.html"><img src="img/blog-post-1.jpeg" alt="..." class="img-fluid"></a></div>
+                        <div class="post-thumbnail"><a href="blog-post.html"><img src="{{$post->getPhotoUrl()}}" alt="{{$post->name}}" class="img-fluid"></a></div>
                         <div class="post-details">
                             <div class="post-meta d-flex justify-content-between">
-                                <div class="date meta-last">20 May | 2016</div>
-                                <div class="category"><a href="blog-category.html">Business</a></div>
+                                <div class="date meta-last">{{$post->created_at->format('d M | Y')}}20 May | 2016</div>
+                                <div class="category">
+                                    @empty($post->postCategory->id)
+                                    <a>
+                                        Uncategorized
+                                    </a>
+                                    @endempty
+                                    @isset($post->postCategory->id)
+                                    <a href="{{route('front.posts.category_posts', ['postCategory' => $post->postCategory->id])}}">
+
+                                        {{optional($post->postCategory)->name}}
+                                    </a>
+                                    @endempty
+                                </div>
                             </div><a href="blog-post.html">
-                                <h3 class="h4">Alberto Savoia Can Teach You About Interior</h3></a>
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                                <h3 class="h4">{{$post->name}}</h3></a>
+                            <p class="text-muted">{{$post->description}}</p>
                             <footer class="post-footer d-flex align-items-center"><a href="blog-author.html" class="author d-flex align-items-center flex-wrap">
-                                    <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div>
-                                    <div class="title"><span>John Doe</span></div></a>
-                                <div class="date"><i class="icon-clock"></i> 2 months ago</div>
-                                <div class="comments meta-last"><i class="icon-comment"></i>12</div>
+                                    <div class="avatar"><img src="{{optional($post->user)->getPhotoUrl()}}" alt="{{optional($post->user)->name}}" class="img-fluid"></div>
+                                    <div class="title"><span>{{optional($post->user)->name}}</span></div></a>
+                                <div class="date"><i class="icon-clock"></i> {{$post->created_at->diffForHumans()}}</div>
+                                <div class="comments meta-last"><i class="icon-comment"></i>{{$post->comment}}</div>
                             </footer>
                         </div>
                     </div>
-                    <!-- post             -->
-                    <div class="post col-xl-6">
-                        <div class="post-thumbnail"><a href="blog-post.html"><img src="img/blog-post-2.jpg" alt="..." class="img-fluid"></a></div>
-                        <div class="post-details">
-                            <div class="post-meta d-flex justify-content-between">
-                                <div class="date meta-last">20 May | 2016</div>
-                                <div class="category"><a href="blog-category.html">Business</a></div>
-                            </div><a href="blog-post.html">
-                                <h3 class="h4">Alberto Savoia Can Teach You About Interior</h3></a>
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                            <div class="post-footer d-flex align-items-center"><a href="blog-author.html" class="author d-flex align-items-center flex-wrap">
-                                    <div class="avatar"><img src="img/avatar-2.jpg" alt="..." class="img-fluid"></div>
-                                    <div class="title"><span>John Doe</span></div></a>
-                                <div class="date"><i class="icon-clock"></i> 2 months ago</div>
-                                <div class="comments meta-last"><i class="icon-comment"></i>12</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- post             -->
-                    <div class="post col-xl-6">
-                        <div class="post-thumbnail"><a href="blog-post.html"><img src="img/blog-post-3.jpeg" alt="..." class="img-fluid"></a></div>
-                        <div class="post-details">
-                            <div class="post-meta d-flex justify-content-between">
-                                <div class="date meta-last">20 May | 2016</div>
-                                <div class="category"><a href="blog-category.html">Business</a></div>
-                            </div><a href="blog-post.html">
-                                <h3 class="h4">Alberto Savoia Can Teach You About Interior</h3></a>
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                            <div class="post-footer d-flex align-items-center"><a href="blog-author.html" class="author d-flex align-items-center flex-wrap">
-                                    <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div>
-                                    <div class="title"><span>John Doe</span></div></a>
-                                <div class="date"><i class="icon-clock"></i> 2 months ago</div>
-                                <div class="comments meta-last"><i class="icon-comment"></i>12</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- post -->
-                    <div class="post col-xl-6">
-                        <div class="post-thumbnail"><a href="blog-post.html"><img src="img/blog-post-4.jpeg" alt="..." class="img-fluid"></a></div>
-                        <div class="post-details">
-                            <div class="post-meta d-flex justify-content-between">
-                                <div class="date meta-last">20 May | 2016</div>
-                                <div class="category"><a href="blog-category.html">Business</a></div>
-                            </div><a href="blog-post.html">
-                                <h3 class="h4">Alberto Savoia Can Teach You About Interior</h3></a>
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                            <div class="post-footer d-flex align-items-center"><a href="blog-author.html" class="author d-flex align-items-center flex-wrap">
-                                    <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid"></div>
-                                    <div class="title"><span>John Doe</span></div></a>
-                                <div class="date"><i class="icon-clock"></i> 2 months ago</div>
-                                <div class="comments meta-last"><i class="icon-comment"></i>12</div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <!-- Pagination -->
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination pagination-template d-flex justify-content-center">
-                        <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
-                        <li class="page-item"><a href="#" class="page-link active">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
-                    </ul>
+                    {{$posts->links()}}
                 </nav>
             </div>
         </main>
@@ -100,7 +53,7 @@
             <!-- Widget [Search Bar Widget]-->
             <div class="widget search">
                 <header>
-                    <h3 class="h6">Search the blog</h3>
+                    <h3 class="h6">@lang('Search the blog')</h3>
                 </header>
                 <form action="blog-search.html" class="search-form">
                     <div class="form-group">
@@ -109,64 +62,9 @@
                     </div>
                 </form>
             </div>
-            <!-- Widget [Latest Posts Widget]        -->
-            <div class="widget latest-posts">
-                <header>
-                    <h3 class="h6">Latest Posts</h3>
-                </header>
-                <div class="blog-posts"><a href="blog-post.html">
-                        <div class="item d-flex align-items-center">
-                            <div class="image"><img src="img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
-                            <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                                <div class="d-flex align-items-center">
-                                    <div class="views"><i class="icon-eye"></i> 500</div>
-                                    <div class="comments"><i class="icon-comment"></i>12</div>
-                                </div>
-                            </div>
-                        </div></a><a href="blog-post.html">
-                        <div class="item d-flex align-items-center">
-                            <div class="image"><img src="img/small-thumbnail-2.jpg" alt="..." class="img-fluid"></div>
-                            <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                                <div class="d-flex align-items-center">
-                                    <div class="views"><i class="icon-eye"></i> 500</div>
-                                    <div class="comments"><i class="icon-comment"></i>12</div>
-                                </div>
-                            </div>
-                        </div></a><a href="blog-post.html">
-                        <div class="item d-flex align-items-center">
-                            <div class="image"><img src="img/small-thumbnail-3.jpg" alt="..." class="img-fluid"></div>
-                            <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                                <div class="d-flex align-items-center">
-                                    <div class="views"><i class="icon-eye"></i> 500</div>
-                                    <div class="comments"><i class="icon-comment"></i>12</div>
-                                </div>
-                            </div>
-                        </div></a></div>
-            </div>
-            <!-- Widget [Categories Widget]-->
-            <div class="widget categories">
-                <header>
-                    <h3 class="h6">Categories</h3>
-                </header>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Growth</a><span>12</span></div>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Local</a><span>25</span></div>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Sales</a><span>8</span></div>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Tips</a><span>17</span></div>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Local</a><span>25</span></div>
-            </div>
-            <!-- Widget [Tags Cloud Widget]-->
-            <div class="widget tags">       
-                <header>
-                    <h3 class="h6">Tags</h3>
-                </header>
-                <ul class="list-inline">
-                    <li class="list-inline-item"><a href="blog-tag.html" class="tag">#Business</a></li>
-                    <li class="list-inline-item"><a href="blog-tag.html" class="tag">#Technology</a></li>
-                    <li class="list-inline-item"><a href="blog-tag.html" class="tag">#Fashion</a></li>
-                    <li class="list-inline-item"><a href="blog-tag.html" class="tag">#Sports</a></li>
-                    <li class="list-inline-item"><a href="blog-tag.html" class="tag">#Economy</a></li>
-                </ul>
-            </div>
+            @include('front.posts.partials.latest_posts_widget')
+            @include('front.posts.partials.categories_widget')
+            @include('front.posts.partials.tags_widget')
         </aside>
     </div>
 </div>

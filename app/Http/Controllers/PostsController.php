@@ -12,20 +12,19 @@ class PostsController extends Controller
 {
     public function index (Request $request)
     {
-        $postsQuery = Post::query()
-                ->with('postCategory', 'user')
-                ;
         
-        $posts = $postsQuery
+        
+        $posts = Post::query()
+                ->with('postCategory', 'user')
                 ->orderBy('created_at', 'desc')
                 ->paginate(12)
                 ;
         
-        $latestPosts = $postsQuery
-                ->orderBy('created_at')
-                ->limit(3)
-                ->get()
-                ;
+        $latestPosts = Post::query()
+                    ->orderBy('created_at')
+                    ->limit(3)
+                    ->get()
+                    ;
         
         $postCategories = PostCategory::query()
                 ->orderBy('priority')
@@ -63,7 +62,6 @@ class PostsController extends Controller
                 ;
         
         $latestPosts = Post::query()
-                ->with('postCategory', 'user')
                 ->orderBy('created_at')
                 ->limit(3)
                 ->get()
@@ -88,9 +86,43 @@ class PostsController extends Controller
     public function tagPosts (Request $request, Tag $tag)
     {
         
+        $posts = Post::query()
+                ->whereHas('tags', function ($query) use($tag){
+                    $query->where('tag_id', $tag->id);
+                })
+                ->with('postCategory', 'user')
+                ->orderBy('created_at')
+                ->paginate(12)
+                ;
+                
+        $postCategories = PostCategory::query()
+                ->orderBy('priority')
+                ->withCount(['posts'])
+                ->get()
+                ;
+        
+        $latestPosts = Post::query()
+                ->orderBy('created_at')
+                ->limit(3)
+                ->get()
+                ;
+        
+        
+        $tags = Tag::query()
+                ->withCount('posts')
+                ->orderBy('posts_count', 'desc')
+                ->get()
+                ;
         
         return view('front.posts.tag_posts', [
-            'tag' => $tag
+            'tag' => $tag,
+            'posts' => $posts,
+            'postCategories' => $postCategories,
+            'latestPosts' => $latestPosts,
+            'tags' => $tags,
+            
         ]);
     }
+    
+    
 }
