@@ -29,11 +29,25 @@
             >{{old('contact_message')}}</textarea>
             @include('front._layout.partials.form_errors', ['fieldName' => 'contact_message'])
         </div>
+        <div style="height: 90px; display: inline-block; width: 45%; margin-left: 15px" class="form-control @if($errors->has('g-recaptcha-response'))is-invalid @endif" id="recaptcha">
+            {!! htmlFormSnippet() !!}
+        </div> 
+        
+         
         <div class="form-group col-md-12">
-            <button type="submit" class="btn btn-secondary">@lang('Submit Your Message')</button>
+            <button type="submit" class="btn btn-secondary" data-error="recaptcha">@lang('Submit Your Message')</button>
         </div>
+        @include('front._layout.partials.form_errors', ['fieldName' => 'g-recaptcha-response'])
     </div>
 </form>
+
+@push('head_scripts')
+
+{!! htmlScriptTagJsApi([
+    'lang' => 'en'
+]) !!}
+
+@endpush
 
 @push('footer_javascript')
 
@@ -61,6 +75,14 @@
                 "minlength": 50,
                 "maxlength": 255
             }
+        },
+        submitHandler: function(form) {
+        if (grecaptcha.getResponse()) {
+            form.submit();
+        } else {
+            $('#recaptcha_errors').remove();
+            $('[data-error="recaptcha"]').after('<p class="text-danger" id="recaptcha_errors">Please confirm that you are not a robot!</p>');
+        }
         },
         "errorPlacement": function (error, element) {
             error.addClass('text-danger');
