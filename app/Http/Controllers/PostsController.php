@@ -125,4 +125,12 @@ class PostsController extends Controller
     }
     
     
+    public function singlePost (Request $request, Post $post)
+    {
+        return view('front.posts.single_post', [
+            'post' => $post
+        ]);
+    }
+    
+    
 }
