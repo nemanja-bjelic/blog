@@ -5,9 +5,14 @@
             <div class="close-btn"><i class="icon-close"></i></div>
             <div class="row d-flex justify-content-center">
                 <div class="col-md-8">
-                    <form action="blog-search.html">
+                    <form action="{{ route('front.posts.search_posts') }}" method="get">
                         <div class="form-group">
-                            <input type="search" name="search" id="search" placeholder="What are you looking for?">
+                            <input 
+                                type="search" 
+                                name="search_term" 
+                                id="search" 
+                                placeholder="@lang('What are you looking for')?"
+                            >
                             <button type="submit" class="submit"><i class="icon-search-1"></i></button>
                         </div>
                     </form>

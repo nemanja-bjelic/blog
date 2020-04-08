@@ -43,5 +43,10 @@ class Post extends Model
         return url($this->photo);
     }
     
+    public function getFrontUrl()
+    {
+        return route('front.posts.single_post', ['post' => $this->id]);
+    }
+    
    
 }
