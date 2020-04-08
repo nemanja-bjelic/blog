@@ -32,7 +32,7 @@ class PostsController extends Controller
                 ->get()
                 ;
         
-        $tags = Tag::query()
+        $allTags = Tag::query()
                 ->withCount('posts')
                 ->orderBy('posts_count', 'desc')
                 ->get()
@@ -42,7 +42,7 @@ class PostsController extends Controller
             'posts' => $posts,
             'latestPosts' => $latestPosts,
             'postCategories' => $postCategories,
-            'tags' => $tags
+            'allTags' => $allTags
         ]);
     }
     
@@ -68,7 +68,7 @@ class PostsController extends Controller
                 ;
         
         
-        $tags = Tag::query()
+        $allTags = Tag::query()
                 ->withCount('posts')
                 ->orderBy('posts_count', 'desc')
                 ->get()
@@ -79,7 +79,7 @@ class PostsController extends Controller
             'postCategory' => $postCategory,
             'postCategories' => $postCategories,
             'latestPosts' => $latestPosts,
-            'tags' => $tags,
+            'allTags' => $allTags,
         ]);
     }
     
@@ -108,7 +108,7 @@ class PostsController extends Controller
                 ;
         
         
-        $tags = Tag::query()
+        $allTags = Tag::query()
                 ->withCount('posts')
                 ->orderBy('posts_count', 'desc')
                 ->get()
@@ -119,7 +119,7 @@ class PostsController extends Controller
             'posts' => $posts,
             'postCategories' => $postCategories,
             'latestPosts' => $latestPosts,
-            'tags' => $tags,
+            'allTags' => $allTags,
             
         ]);
     }
@@ -127,9 +127,56 @@ class PostsController extends Controller
     
     public function singlePost (Request $request, Post $post)
     {
+        
+        $tags = Tag::query()
+                ->whereHas('posts', function ($query) use($post) {
+                    $query->where('post_id', $post->id);
+                })
+                ->with(['posts'])
+                ->withCount('posts')
+                ->orderBy('posts_count', 'desc')
+                ->get()
+                ;
+                
+        $postCategories = PostCategory::query()
+                ->orderBy('priority')
+                ->withCount(['posts'])
+                ->get()
+                ;
+        
+        $latestPosts = Post::query()
+                ->orderBy('created_at')
+                ->limit(3)
+                ->get()
+                ;
+        
+        
+        $allTags = Tag::query()
+                ->withCount('posts')
+                ->orderBy('posts_count', 'desc')
+                ->get()
+                ;
+        
         return view('front.posts.single_post', [
-            'post' => $post
+            'post' => $post,
+            'tags' => $tags,
+            'postCategories' => $postCategories,
+            'latestPosts' => $latestPosts,
+            'allTags' => $allTags,
         ]);
+    }
+    
+    public function increseViews(Request $request, Post $post) 
+    {
+        //dd($post);
+        
+        $numberOfViews = $post->visits_number;
+        
+        
+        $post->visits_number = $numberOfViews + 1;
+        
+        
+        $post->save();
     }
     
     

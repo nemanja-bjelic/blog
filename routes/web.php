@@ -29,6 +29,8 @@ Route::prefix('/posts')->group(function () {
     Route::get('/category-posts/{postCategory}', 'PostsController@categoryPosts')->name('front.posts.category_posts');
     Route::get('/tag-posts/{tag}', 'PostsController@tagPosts')->name('front.posts.tag_posts');
     Route::get('/single-post/{post}', 'PostsController@singlePost')->name('front.posts.single_post');
+    
+    Route::post('/increse-views/{post}', 'PostsController@increseViews')->name('front.posts.increse_views');
 }); 
 
 

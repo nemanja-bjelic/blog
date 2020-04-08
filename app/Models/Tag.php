@@ -19,4 +19,11 @@ class Tag extends Model
                 'post_id'
                 );
     }
+    
+    public function getFrontUrl ()
+    {
+        return route('front.posts.tag_posts', [
+            'tag' => $this->id
+        ]);
+    }
 }
