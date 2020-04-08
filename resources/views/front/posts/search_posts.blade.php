@@ -1,19 +1,18 @@
 @extends('front._layout.layout')
-
-@section('seo_title', 'Blog Posts')
-
+@section('seo_title', $searchTerm)
 @section('content')
 <div class="container">
     <div class="row">
         <!-- Latest Posts -->
         <main class="posts-listing col-lg-8"> 
             <div class="container">
+                <h2 class="mb-3">@lang('Search results for') "{{ $searchTerm }}"</h2>
                 <div class="row">
                     @include('front.posts.partials.posts_list')
                 </div>
                 <!-- Pagination -->
                 <nav aria-label="Page navigation example">
-                    {{ $posts->links() }}
+                    {{ $posts->appends(['search_term' => $searchTerm])->links() }}
                 </nav>
             </div>
         </main>
@@ -25,5 +24,4 @@
         </aside>
     </div>
 </div>
-
 @endsection

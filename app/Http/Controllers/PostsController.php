@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\Tag;
+use App\Models\PostComment;
+use App\User;
 
 class PostsController extends Controller
 {
@@ -20,29 +22,10 @@ class PostsController extends Controller
                 ->paginate(12)
                 ;
         
-        $latestPosts = Post::query()
-                    ->orderBy('created_at')
-                    ->limit(3)
-                    ->get()
-                    ;
-        
-        $postCategories = PostCategory::query()
-                ->orderBy('priority')
-                ->withCount(['posts'])
-                ->get()
-                ;
-        
-        $allTags = Tag::query()
-                ->withCount('posts')
-                ->orderBy('posts_count', 'desc')
-                ->get()
-                ;
+
         
         return view('front.posts.index',[
             'posts' => $posts,
-            'latestPosts' => $latestPosts,
-            'postCategories' => $postCategories,
-            'allTags' => $allTags
         ]);
     }
     
@@ -55,31 +38,11 @@ class PostsController extends Controller
                 ->paginate(12)
                 ;
         
-        $postCategories = PostCategory::query()
-                ->orderBy('priority')
-                ->withCount(['posts'])
-                ->get()
-                ;
-        
-        $latestPosts = Post::query()
-                ->orderBy('created_at')
-                ->limit(3)
-                ->get()
-                ;
-        
-        
-        $allTags = Tag::query()
-                ->withCount('posts')
-                ->orderBy('posts_count', 'desc')
-                ->get()
-                ;
+
         
         return view('front.posts.category_posts', [
             'posts' => $posts,
             'postCategory' => $postCategory,
-            'postCategories' => $postCategories,
-            'latestPosts' => $latestPosts,
-            'allTags' => $allTags,
         ]);
     }
     
@@ -91,36 +54,32 @@ class PostsController extends Controller
                     $query->where('tag_id', $tag->id);
                 })
                 ->with('postCategory', 'user')
-                ->orderBy('created_at')
+                ->orderBy('created_at', 'desc')
                 ->paginate(12)
                 ;
                 
-        $postCategories = PostCategory::query()
-                ->orderBy('priority')
-                ->withCount(['posts'])
-                ->get()
-                ;
-        
-        $latestPosts = Post::query()
-                ->orderBy('created_at')
-                ->limit(3)
-                ->get()
-                ;
-        
-        
-        $allTags = Tag::query()
-                ->withCount('posts')
-                ->orderBy('posts_count', 'desc')
-                ->get()
-                ;
         
         return view('front.posts.tag_posts', [
             'tag' => $tag,
             'posts' => $posts,
-            'postCategories' => $postCategories,
-            'latestPosts' => $latestPosts,
-            'allTags' => $allTags,
             
+        ]);
+    }
+    
+    public function authorPosts (Request $request, User $user)
+    {
+        $posts = Post::query()
+                ->where('user_id', $user->id)
+                ->with(['postCategory', 'user'])
+                ->orderBy('created_at', 'desc')
+                ->paginate(12)
+                ;
+        
+
+        
+        return view('front.posts.author_posts', [
+            'posts' => $posts,
+            'user' => $user,
         ]);
     }
     
@@ -138,37 +97,34 @@ class PostsController extends Controller
                 ->get()
                 ;
                 
-        $postCategories = PostCategory::query()
-                ->orderBy('priority')
-                ->withCount(['posts'])
+        $comments = PostComment::query()
+                ->orderBy('created_at', 'desc')
                 ->get()
                 ;
         
-        $latestPosts = Post::query()
-                ->orderBy('created_at')
-                ->limit(3)
-                ->get()
+        $previousPost = Post::query()
+                ->where('id', '<', $post->id)
+                ->orderBy('id', 'desc')
+                ->first()
                 ;
         
-        
-        $allTags = Tag::query()
-                ->withCount('posts')
-                ->orderBy('posts_count', 'desc')
-                ->get()
+        $nextPost = Post::query()
+                ->where('id', '>', $post->id)
+                ->orderBy('id', 'asc')
+                ->first()
                 ;
         
         return view('front.posts.single_post', [
             'post' => $post,
             'tags' => $tags,
-            'postCategories' => $postCategories,
-            'latestPosts' => $latestPosts,
-            'allTags' => $allTags,
+            'comments' => $comments,
+            'previousPost' => $previousPost,
+            'nextPost' => $nextPost
         ]);
     }
     
     public function increseViews(Request $request, Post $post) 
     {
-        //dd($post);
         
         $numberOfViews = $post->visits_number;
         
@@ -178,6 +134,72 @@ class PostsController extends Controller
         
         $post->save();
     }
+    
+    public function singlePostComment(Request $request, Post $post)
+    {
+        $formData = $request->validate([
+            'user_name' => ['required', 'string', 'min:2', 'max:255'],
+            'user_email' => ['required', 'email'],
+            'content' => ['required', 'string', 'min:2', 'max:5000']
+        ]);
+        
+        $newPostComment = new PostComment();
+        
+        $newPostComment->fill($formData);
+        
+        $newPostComment->post_id = $post->id;
+        
+        $newPostComment->save();
+        
+        $currentPostNumber = $post->comments_number;
+        
+        $post->comments_number = $currentPostNumber + 1;
+        
+        $post->save();
+        
+        return response()->json([
+            'system_message' => 'You posted your comment successfuly'
+        ]);
+    }
+    
+    
+    public function showPostComments (Post $post)
+    {
+        $postComments = PostComment::query()
+                ->where('post_id', $post->id)
+                ->orderBy('created_at')
+                ->get()
+                ;
+        
+        return view('front.posts.partials.comments', [
+            'postComments' => $postComments
+        ]);
+    }
+    
+    public function searchPosts (Request $request)
+    {
+        
+        $formData = $request->validate([
+            'search_term' => ['required', 'string', 'max:255']
+        ]);
+        
+        $posts = Post::query()
+                ->orderBy('created_at', 'desc')
+                ->where('title', 'LIKE', '%' . $formData['search_term'] . '%')
+                ->orWhere('description', 'LIKE', '%' . $formData['search_term'] . '%')
+                ->orWhere('content', 'LIKE', '%' . $formData['search_term'] . '%')
+                ->paginate(12)
+                ;
+        
+        //$posts->withPath('');
+        //dd($formData);
+        
+        return view('front.posts.search_posts', [
+            'posts' => $posts,
+            'searchTerm' => $formData['search_term']
+                ]);
+    }
+    
     
     
 }
