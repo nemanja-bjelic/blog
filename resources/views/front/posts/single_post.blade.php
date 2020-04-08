@@ -46,8 +46,9 @@
                                 </div>
                                 <div class="views">
                                     <i class="icon-eye"></i> 
-                                    {{ $post->visits_number }}
+                                    {{ $post->visits_number + 1}}
                                 </div>
+                                <input type="hidden" value="{{ $post->visits_number }}" name="visits-count">
                                 <div class="comments meta-last">
                                     <a href="#post-comments">
                                         <i class="icon-comment"></i>
@@ -60,20 +61,43 @@
                             <p class="lead">{{ $post->description }}</p>
                             {{ $post->content }}
                         </div>
-                        <div class="post-tags"><a href="blog-tag.html" class="tag">#Business</a><a href="blog-tag.html" class="tag">#Tricks</a><a href="blog-tag.html" class="tag">#Financial</a><a href="blog-tag.html" class="tag">#Economy</a></div>
-                        <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row"><a href="#" class="prev-post text-left d-flex align-items-center">
-                                <div class="icon prev"><i class="fa fa-angle-left"></i></div>
-                                <div class="text"><strong class="text-primary">Previous Post </strong>
-                                    <h6>I Bought a Wedding Dress.</h6>
-                                </div></a><a href="#" class="next-post text-right d-flex align-items-center justify-content-end">
-                                <div class="text"><strong class="text-primary">Next Post </strong>
+                        <div class="post-tags">
+                            @foreach($tags as $tag)
+                            <a href="{{ $tag->getFrontUrl() }}" class="tag">#{{ $tag->name }}</a>
+                            @endforeach
+                        </div>
+                        <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row">
+                            <a href="#" class="prev-post text-left d-flex align-items-center">
+                                <div class="icon prev">
+                                    <i class="fa fa-angle-left"></i>
+                                </div>
+                                <div class="text">
+                                    <strong class="text-primary">
+                                        @lang('Previous Post ')
+                                    </strong>
                                     <h6>I Bought a Wedding Dress.</h6>
                                 </div>
-                                <div class="icon next"><i class="fa fa-angle-right">   </i></div></a></div>
+                            </a>
+                            <a href="#" class="next-post text-right d-flex align-items-center justify-content-end">
+                                <div class="text">
+                                    <strong class="text-primary">
+                                        @lag('Next Post')
+                                    </strong>
+                                    <h6>I Bought a Wedding Dress.</h6>
+                                </div>
+                                <div class="icon next"><i class="fa fa-angle-right">   </i></div>
+                            </a>
+                        </div>
                         <div class="post-comments" id="post-comments">
                             <header>
-                                <h3 class="h6">Post Comments<span class="no-of-comments">(3)</span></h3>
+                                <h3 class="h6">
+                                    @lang('Post Comments')
+                                    <span class="no-of-comments">
+                                        ({{ $post->comments_number }})
+                                    </span>
+                                </h3>
                             </header>
+                            <input type="hidden" value="{{ $post->comments_number }}" name="comments_number">
                             <div class="comment">
                                 <div class="comment-header d-flex justify-content-between">
                                     <div class="user d-flex align-items-center">
@@ -110,7 +134,7 @@
                         </div>
                         <div class="add-comment">
                             <header>
-                                <h3 class="h6">Leave a reply</h3>
+                                <h3 class="h6">@lang('Leave a reply')</h3>
                             </header>
                             <form action="#" class="commenting-form">
                                 <div class="row">
@@ -124,7 +148,7 @@
                                         <textarea name="usercomment" id="usercomment" placeholder="Type your comment" class="form-control"></textarea>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <button type="submit" class="btn btn-secondary">Submit Comment</button>
+                                        <button type="submit" class="btn btn-secondary">@lang('Submit Comment')</button>
                                     </div>
                                 </div>
                             </form>
@@ -137,74 +161,36 @@
             <!-- Widget [Search Bar Widget]-->
             <div class="widget search">
                 <header>
-                    <h3 class="h6">Search the blog</h3>
+                    <h3 class="h6">@lang('Search the blog')</h3>
                 </header>
                 <form action="blog-search.html" class="search-form">
                     <div class="form-group">
-                        <input type="search" placeholder="What are you looking for?">
+                        <input type="search" placeholder="@lang('What are you looking for')?">
                         <button type="submit" class="submit"><i class="icon-search"></i></button>
                     </div>
                 </form>
             </div>
-            <!-- Widget [Latest Posts Widget]        -->
-            <div class="widget latest-posts">
-                <header>
-                    <h3 class="h6">Latest Posts</h3>
-                </header>
-                <div class="blog-posts"><a href="blog-post.html">
-                        <div class="item d-flex align-items-center">
-                            <div class="image"><img src="img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
-                            <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                                <div class="d-flex align-items-center">
-                                    <div class="views"><i class="icon-eye"></i> 500</div>
-                                    <div class="comments"><i class="icon-comment"></i>12</div>
-                                </div>
-                            </div>
-                        </div></a><a href="blog-post.html">
-                        <div class="item d-flex align-items-center">
-                            <div class="image"><img src="img/small-thumbnail-2.jpg" alt="..." class="img-fluid"></div>
-                            <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                                <div class="d-flex align-items-center">
-                                    <div class="views"><i class="icon-eye"></i> 500</div>
-                                    <div class="comments"><i class="icon-comment"></i>12</div>
-                                </div>
-                            </div>
-                        </div></a><a href="blog-post.html">
-                        <div class="item d-flex align-items-center">
-                            <div class="image"><img src="img/small-thumbnail-3.jpg" alt="..." class="img-fluid"></div>
-                            <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                                <div class="d-flex align-items-center">
-                                    <div class="views"><i class="icon-eye"></i> 500</div>
-                                    <div class="comments"><i class="icon-comment"></i>12</div>
-                                </div>
-                            </div>
-                        </div></a></div>
-            </div>
-            <!-- Widget [Categories Widget]-->
-            <div class="widget categories">
-                <header>
-                    <h3 class="h6">Categories</h3>
-                </header>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Growth</a><span>12</span></div>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Local</a><span>25</span></div>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Sales</a><span>8</span></div>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Tips</a><span>17</span></div>
-                <div class="item d-flex justify-content-between"><a href="blog-category.html">Local</a><span>25</span></div>
-            </div>
-            <!-- Widget [Tags Cloud Widget]-->
-            <div class="widget tags">       
-                <header>
-                    <h3 class="h6">Tags</h3>
-                </header>
-                <ul class="list-inline">
-                    <li class="list-inline-item"><a href="blog-tag.html" class="tag">#Business</a></li>
-                    <li class="list-inline-item"><a href="blog-tag.html" class="tag">#Technology</a></li>
-                    <li class="list-inline-item"><a href="blog-tag.html" class="tag">#Fashion</a></li>
-                    <li class="list-inline-item"><a href="blog-tag.html" class="tag">#Sports</a></li>
-                    <li class="list-inline-item"><a href="blog-tag.html" class="tag">#Economy</a></li>
-                </ul>
-            </div>
+            @include('front.posts.partials.latest_posts_widget')
+            @include('front.posts.partials.categories_widget')
+            @include('front.posts.partials.tags_widget')
         </aside>
     </div>
 </div>
-@endcontent
+@endsection
+
+@push('footer_javascript')
+
+<script type="text/javascript">
+    
+  
+    $.ajax({
+        "url": "{{ route('front.posts.increse_views', ['post' => $post->id]) }}",
+        "method": "post",
+        "data": {
+            "_token": "{{ csrf_token() }}"
+            
+        }
+    });
+</script>
+
+@endpush
