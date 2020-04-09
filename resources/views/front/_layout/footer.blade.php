@@ -29,7 +29,7 @@
                     </ul>
                     <ul class="list-unstyled">
                         @foreach(App\Models\PostCategory::query()->orderBy('priority')->limit(4)->get() as $postCategory)
-                        <li> <a href="blog-category.html">{{$postCategory->name}}</a></li>
+                        <li> <a href="{{ $postCategory->getFrontUrl() }}">{{$postCategory->name}}</a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -37,9 +37,9 @@
             <div class="col-md-4">
                 <div class="latest-posts">
                     @foreach(\App\Models\Post::query()->orderBy('created_at')->limit(3)->get() as $post)
-                    <a href="blog-post.html">
+                    <a href="{{ $post->getFrontUrl() }}">
                         <div class="post d-flex align-items-center">
-                            <div class="image"><img src="{{$post->getPhotoUrl()}}" alt="..." class="img-fluid"></div>
+                            <div class="image"><img src="{{$post->getPhotoUrl()}}" alt="{{$post->title}}" class="img-fluid"></div>
                             <div class="title"><strong>{{$post->title}}</strong>
                                 <span class="date last-meta">{{$post->created_at->format('F d, Y')}}</span>
                             </div>

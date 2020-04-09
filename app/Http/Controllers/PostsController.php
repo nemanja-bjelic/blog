@@ -102,7 +102,7 @@ class PostsController extends Controller
         return view('front.posts.tag_posts', [
             'tag' => $tag,
             'posts' => $posts,
-            'latetsPostIds' => $latestPostIds
+            'latestPostIds' => $latestPostIds
             
         ]);
     }

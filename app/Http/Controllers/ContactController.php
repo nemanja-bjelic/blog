@@ -4,14 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mail\ContactFormMail;
+use App\Models\PostView;
 
 class ContactController extends Controller
 {
     public function index () 
     {
         
+        $latestPostIds = PostView::query()
+                ->select(\DB::raw('count(post_id), post_id'))
+                ->whereBetween('created_at', [date('Y-m-d H:i:s', strtotime(' 1 months ago')), date('Y-m-d H:i:s')])
+                ->groupBy('post_id')
+                ->orderBy('count(post_id)', 'desc')
+                ->limit(3)
+                ->pluck('post_id')
+                ->toArray();
+        
+        
         return view('front.contact.index', [
-            
+            'latestPostIds' => $latestPostIds
         ]);
     }
     
