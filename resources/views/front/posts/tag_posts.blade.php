@@ -1,6 +1,8 @@
 @extends('front._layout.layout')
 
 @section('seo_title', $tag->name)
+@section('seo_type', 'blog posts')
+@section('seo_description', __('Posts with tag ').$tag->name)
 
 @section('content')
 <div class="container">

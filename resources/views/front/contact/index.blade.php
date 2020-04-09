@@ -1,6 +1,8 @@
 @extends('front._layout.layout')
 
 @section('seo_title', __('Blog Contact Page'))
+@section('seo_type', 'blog posts')
+@section('seo_description', __('If you wish to contact us. Please send us a message.'))
 
 @section('content')
 <!-- Hero Section -->

@@ -1,6 +1,9 @@
 @extends('front._layout.layout')
 
 @section('seo_title', $postCategory->name)
+@section('seo_type', 'blog posts')
+@section('seo_description', $postCategory->description)
+@section('seo_image')
 
 @section('content')
 <div class="container">

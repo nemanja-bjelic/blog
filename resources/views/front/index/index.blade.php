@@ -1,12 +1,18 @@
 @extends('front._layout.layout')
 
 @section('seo_title', __('Blog Home Page'))
+@section('seo_type', 'Blog')
 
 @section('content')
 <!-- Hero Section-->
 <div id="index-slider" class="owl-carousel">
     @foreach($sliders as $slider)
-    <section style="background: url({{$slider->getPhotoUrl()}}); background-size: cover; background-position: center center" class="hero">
+    <section 
+        style="background: url({{$slider->getPhotoUrl()}}); 
+        background-size: cover; 
+        background-position: center center" 
+        class="hero"
+    >
         <div class="container">
             <div class="row">
                 <div class="col-lg-7">
@@ -24,8 +30,11 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <h2 class="h3">Some great intro here</h2>
-                <p class="text-big">Place a nice <strong>introduction</strong> here <strong>to catch reader's attention</strong>.</p>
+                <h2 class="h3">@lang('Some great intro here')</h2>
+                <p class="text-big">@lang('Place a nice')
+                    <strong>@lang('introduction ')</strong> @lang('here ')
+                    <strong>@lang('to catch reader\'s attention')</strong>.
+                </p>
             </div>
         </div>
     </div>
@@ -49,18 +58,18 @@
                                 </a>
                                 @endempty
                                 @isset($post->postCategory->id)
-                                <a href="{{route('front.posts.category_posts', ['postCategory' => $post->postCategory->id])}}">
+                                <a href="{{ $post->postCategory->getFrontUrl() }}">
 
                                     {{optional($post->postCategory)->name}}
                                 </a>
                                 @endisset
                             </div>
-                            <a href="{{ route('front.posts.single_post', ['post' => $post->id]) }}">
+                            <a href="{{ $post->getFrontUrl() }}">
                                 <h2 class="h4">{{$post->title}}</h2>
                             </a>
                         </header>
                         <p>{{$post->description}}</p>
-                        <footer class="post-footer d-flex align-items-center"><a href="blog-author.html" class="author d-flex align-items-center flex-wrap">
+                        <footer class="post-footer d-flex align-items-center"><a href="{{ optional($post->user)->getFrontUrl() }}" class="author d-flex align-items-center flex-wrap">
                                 <div class="avatar"><img src="{{optional($post->user)->getPhotoUrl()}}" alt="{{optional($post->user)->name}}" class="img-fluid"></div>
                                 <div class="title"><span>{{optional($post->user)->name}}</span></div></a>
                             <div class="date"><i class="icon-clock"></i>{{$post->created_at->diffForHumans()}}</div>
@@ -101,7 +110,11 @@
             <div class="row">
                 @endif
                 <div class="post col-md-4">
-                    <div class="post-thumbnail"><a href="{{ route('front.posts.single_post', ['post' => $latestPost]) }}"><img src="{{$latestPost->getPhotoUrl()}}" alt="{{$latestPost->title}}" class="img-fluid"></a></div>
+                    <div class="post-thumbnail">
+                        <a href="{{ $latestPost->getFrontUrl() }}">
+                            <img src="{{$latestPost->getPhotoUrl()}}" alt="{{$latestPost->title}}" class="img-fluid">
+                        </a>
+                    </div>
                     <div class="post-details">
                         <div class="post-meta d-flex justify-content-between">
                             <div class="date">{{$latestPost->created_at->format('d M | Y')}}</div>
@@ -111,14 +124,14 @@
                                     Uncategorized
                                 </a>
                                 @endempty
-                                @isset($latestPost->postCategory->id)
-                                <a href="{{route('front.posts.category_posts', ['postCategory' => $latestPost->postCategory->id])}}">
+                                @isset($latestPost->postCategory->name)
+                                <a href="{{ $latestPost->postCategory->getFrontUrl() }}">
 
-                                    {{optional($post->postCategory)->name}}
+                                    {{ optional($latestPost->postCategory)->name }}
                                 </a>
                                 @endisset
                             </div>
-                        </div><a href="{{ route('front.posts.single_post', ['post' => $latestPost]) }}">
+                        </div><a href="{{ $latestPost->getFrontUrl() }}">
                             <h3 class="h4">{{$latestPost->title}}</h3></a>
                         <p class="text-muted">{{$latestPost->description}}</p>
                     </div>

@@ -20,4 +20,13 @@ class PostCategory extends Model
     }
     
     
+    public function getFrontUrl()
+    {
+        return route('front.posts.category_posts', [
+            'postCategory' => $this->id,
+            'seoSlug' => \Str::slug($this->name)
+                ]);
+    }
+    
+    
 }

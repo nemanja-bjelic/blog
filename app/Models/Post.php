@@ -38,6 +38,17 @@ class Post extends Model
                 );
     }
     
+    public function postViews()
+    {
+        return $this->hasMany(
+                PostView::class,
+                'post_id',
+                'id'
+                );
+    }
+    
+    
+    
     public function getPhotoUrl()
     {
         return url($this->photo);
@@ -45,7 +56,10 @@ class Post extends Model
     
     public function getFrontUrl()
     {
-        return route('front.posts.single_post', ['post' => $this->id]);
+        return route('front.posts.single_post', [
+            'post' => $this->id,
+            'seoSlug' => \Str::slug($this->title)
+                ]);
     }
     
    

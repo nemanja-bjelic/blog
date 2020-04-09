@@ -3,10 +3,27 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@yield('seo_title') - Blog</title>
-    <meta name="description" content="">
+    <title>@yield('seo_title', __('Fresh and actual blog posts.')) - Blog</title>
+    <meta name="description" content="@yield('seo_description', __('Read and comment new and interesting posts.'))">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
+    
+    <!-- OG META -->
+    <meta property="og:site_name" content="{{ config('app.name') }}">
+    <meta property="og:type" content="@yield('seo_og_type', 'blog')">
+    <meta property="og:title" content="@yield('seo_title', __('Fresh and actual blog posts.'))">
+    <meta property="og:description" content="@yield('seo_description', __('Read and comment new and interesting posts.'))">
+    <meta property="og:image" content="@yield('seo_image', url('/themes/front/img/logo.png'))">
+    <meta property="og:url" content="{{ url()->current() }}">
+    
+    
+    <!-- TWITTER META -->
+    <meta name="twitter:card" content="{{ config('app.name') }}">
+    <meta name="twitter:title" content="@yield('seo_title', __('Fresh and actual blog posts.'))">
+    <meta name="twitter:description" content="@yield('seo_description', __('Read and comment new and interesting posts.'))">
+    <meta name="twitter:image" content="@yield('seo_image', url('/themes/front/img/logo.png'))">
+    
+    
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="{{url('/themes/front/vendor/bootstrap/css/bootstrap.min.css')}}">
     <!-- Font Awesome CSS-->

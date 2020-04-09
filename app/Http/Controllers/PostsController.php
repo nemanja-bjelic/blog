@@ -9,6 +9,7 @@ use App\Models\PostCategory;
 use App\Models\Tag;
 use App\Models\PostComment;
 use App\User;
+use App\Models\PostView;
 
 class PostsController extends Controller
 {
@@ -22,15 +23,31 @@ class PostsController extends Controller
                 ->paginate(12)
                 ;
         
+        $latestPostIds = PostView::query()
+                ->select(\DB::raw('count(post_id), post_id'))
+                ->whereBetween('created_at', [date('Y-m-d H:i:s', strtotime(' 1 months ago')), date('Y-m-d H:i:s')])
+                ->groupBy('post_id')
+                ->orderBy('count(post_id)', 'desc')
+                ->limit(3)
+                ->pluck('post_id')
+                ->toArray();
+        
 
+    
         
         return view('front.posts.index',[
             'posts' => $posts,
+            'latestPostIds' => $latestPostIds
         ]);
     }
     
-    public function categoryPosts (Request $request, PostCategory $postCategory)
+    public function categoryPosts (Request $request, PostCategory $postCategory ,$seoSlug = null)
     {
+        
+        if ($seoSlug != \Str::slug($postCategory->name)){
+            return redirect()->away($postCategory->getFrontUrl());
+        }
+        
         $posts = Post::query()
                 ->where('post_category_id', $postCategory->id)
                 ->with(['postCategory', 'user'])
@@ -38,16 +55,29 @@ class PostsController extends Controller
                 ->paginate(12)
                 ;
         
-
+        $latestPostIds = PostView::query()
+                ->select(\DB::raw('count(post_id), post_id'))
+                ->whereBetween('created_at', [date('Y-m-d H:i:s', strtotime(' 1 months ago')), date('Y-m-d H:i:s')])
+                ->groupBy('post_id')
+                ->orderBy('count(post_id)', 'desc')
+                ->limit(3)
+                ->pluck('post_id')
+                ->toArray()
+                ;
         
         return view('front.posts.category_posts', [
             'posts' => $posts,
             'postCategory' => $postCategory,
+            'latestPostIds' => $latestPostIds
         ]);
     }
     
-    public function tagPosts (Request $request, Tag $tag)
+    public function tagPosts (Request $request, Tag $tag, $seoSlug = null)
     {
+        
+        if ($seoSlug != \Str::slug($tag->name)){
+            return redirect()->away($tag->getFrontUrl());
+        }
         
         $posts = Post::query()
                 ->whereHas('tags', function ($query) use($tag){
@@ -58,16 +88,32 @@ class PostsController extends Controller
                 ->paginate(12)
                 ;
                 
+        $latestPostIds = PostView::query()
+                ->select(\DB::raw('count(post_id), post_id'))
+                ->whereBetween('created_at', [date('Y-m-d H:i:s', strtotime(' 1 months ago')), date('Y-m-d H:i:s')])
+                ->groupBy('post_id')
+                ->orderBy('count(post_id)', 'desc')
+                ->limit(3)
+                ->pluck('post_id')
+                ->toArray()
+                ;
+                
         
         return view('front.posts.tag_posts', [
             'tag' => $tag,
             'posts' => $posts,
+            'latetsPostIds' => $latestPostIds
             
         ]);
     }
     
-    public function authorPosts (Request $request, User $user)
+    public function authorPosts (Request $request, User $user, $seoSlug = null)
     {
+        
+        if ($seoSlug != \Str::slug($user->name)){
+            return redirect()->away($user->getFrontUrl());
+        }
+        
         $posts = Post::query()
                 ->where('user_id', $user->id)
                 ->with(['postCategory', 'user'])
@@ -75,17 +121,32 @@ class PostsController extends Controller
                 ->paginate(12)
                 ;
         
-
+        
+        $latestPostIds = PostView::query()
+                ->select(\DB::raw('count(post_id), post_id'))
+                ->whereBetween('created_at', [date('Y-m-d H:i:s', strtotime(' 1 months ago')), date('Y-m-d H:i:s')])
+                ->groupBy('post_id')
+                ->orderBy('count(post_id)', 'desc')
+                ->limit(3)
+                ->pluck('post_id')
+                ->toArray()
+                ;
+        
         
         return view('front.posts.author_posts', [
             'posts' => $posts,
             'user' => $user,
+            'latestPostIds' => $latestPostIds
         ]);
     }
     
     
-    public function singlePost (Request $request, Post $post)
+    public function singlePost (Request $request, Post $post, $seoSlug = null)
     {
+        
+        if ($seoSlug != \Str::slug($post->title)){
+            return redirect()->away($post->getFrontUrl());
+        }
         
         $tags = Tag::query()
                 ->whereHas('posts', function ($query) use($post) {
@@ -103,23 +164,33 @@ class PostsController extends Controller
                 ;
         
         $previousPost = Post::query()
-                ->where('id', '<', $post->id)
-                ->orderBy('id', 'desc')
+                ->where('created_at', '<', $post->created_at)
+                ->orderBy('created_at', 'desc')
                 ->first()
                 ;
         
         $nextPost = Post::query()
-                ->where('id', '>', $post->id)
-                ->orderBy('id', 'asc')
+                ->where('created_at', '>', $post->created_at)
+                ->orderBy('created_at', 'asc')
                 ->first()
                 ;
+        
+        $latestPostIds = PostView::query()
+                ->select(\DB::raw('count(post_id), post_id'))
+                ->whereBetween('created_at', [date('Y-m-d H:i:s', strtotime(' 1 months ago')), date('Y-m-d H:i:s')])
+                ->groupBy('post_id')
+                ->orderBy('count(post_id)', 'desc')
+                ->limit(3)
+                ->pluck('post_id')
+                ->toArray();
         
         return view('front.posts.single_post', [
             'post' => $post,
             'tags' => $tags,
             'comments' => $comments,
             'previousPost' => $previousPost,
-            'nextPost' => $nextPost
+            'nextPost' => $nextPost,
+            'latestPostIds' => $latestPostIds
         ]);
     }
     
@@ -133,6 +204,12 @@ class PostsController extends Controller
         
         
         $post->save();
+        
+        $newPostView = new PostView();
+        
+        $newPostView->post_id = $post->id;
+        
+        $newPostView->save();
     }
     
     public function singlePostComment(Request $request, Post $post)
@@ -190,13 +267,19 @@ class PostsController extends Controller
                 ->orWhere('content', 'LIKE', '%' . $formData['search_term'] . '%')
                 ->paginate(12)
                 ;
-        
-        //$posts->withPath('');
-        //dd($formData);
+        $latestPostIds = PostView::query()
+                ->select(\DB::raw('count(post_id), post_id'))
+                ->whereBetween('created_at', [date('Y-m-d H:i:s', strtotime(' 1 months ago')), date('Y-m-d H:i:s')])
+                ->groupBy('post_id')
+                ->orderBy('count(post_id)', 'desc')
+                ->limit(3)
+                ->pluck('post_id')
+                ->toArray();
         
         return view('front.posts.search_posts', [
             'posts' => $posts,
-            'searchTerm' => $formData['search_term']
+            'searchTerm' => $formData['search_term'],
+            'latestPostIds' => $latestPostIds
                 ]);
     }
     

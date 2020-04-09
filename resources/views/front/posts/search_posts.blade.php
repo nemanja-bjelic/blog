@@ -1,5 +1,9 @@
 @extends('front._layout.layout')
-@section('seo_title', $searchTerm)
+
+@section('seo_title', 'Search the Blog')
+@section('seo_type', 'blog posts')
+@section('seo_description', __('Searched our blog by term: ').$searchTerm)
+
 @section('content')
 <div class="container">
     <div class="row">

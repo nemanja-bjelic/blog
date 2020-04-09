@@ -1,5 +1,10 @@
 @extends('front._layout.layout')
+
 @section('seo_title', $post->title)
+@section('seo_type', 'blog posts')
+@section('seo_description', $post->description)
+@section('seo_image', $post->getPhotoUrl())
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -17,7 +22,7 @@
                                 </a>
                                 @endempty
                                 @isset($post->postCategory->id)
-                                <a href="{{route('front.posts.category_posts', ['postCategory' => $post->postCategory->id])}}">
+                                <a href="{{ $post->postCategory->getFrontUrl() }}">
 
                                     {{optional($post->postCategory)->name}}
                                 </a>
@@ -30,15 +35,21 @@
                             </a>
                         </h1>
                         <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
-                            <a href="blog-author.html" class="author d-flex align-items-center flex-wrap">
+                            <a 
+                                href="{{ optional($post->user)->getFrontUrl() }}" 
+                                class="author d-flex align-items-center flex-wrap"
+                            >
                                 <div class="avatar">
                                     <img 
                                         src="{{optional($post->user)->getPhotoUrl()}}" 
                                         alt="{{ optional($post->user)->name }}" 
                                         class="img-fluid"
-                                        >
+                                    >
                                 </div>
-                                <div class="title"><span>{{optional($post->user)->name}}</span></div></a>
+                                <div class="title">
+                                    <span>{{optional($post->user)->name}}</span>
+                                </div>
+                            </a>
                             <div class="d-flex align-items-center flex-wrap">       
                                 <div class="date">
                                     <i class="icon-clock"></i> 

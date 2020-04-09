@@ -1,6 +1,8 @@
 @extends('front._layout.layout')
 
 @section('seo_title', 'Blog Posts')
+@section('seo_type', 'blog posts')
+@section('seo_description', __('All posts on our blog'))
 
 @section('content')
 <div class="container">

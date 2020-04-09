@@ -82,5 +82,13 @@ class User extends Authenticatable {
 		
             return $this;
 	}
+        
+    public function getFrontUrl() 
+        {
+        return route('front.posts.author_posts', [
+            'user' => $this->id,
+            'seoSlug' => \Str::slug($this->name)
+                ]);
+        }
 
 }

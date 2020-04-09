@@ -3,12 +3,12 @@
     <header>
         <h3 class="h6">@lang('Categories')</h3>
     </header>
-    @foreach(App\Models\PostCategory::query()->orderBy('priority')->withCount(['posts'])->get() as $postCategories)
+    @foreach(App\Models\PostCategory::query()->orderBy('priority')->withCount(['posts'])->get() as $postCategory)
     <div class="item d-flex justify-content-between">
         <a 
-            href="{{route('front.posts.category_posts', ['postCategory' => $postCategories->id])}}"
+            href="{{ $postCategory->getFrontUrl() }}"
             >
-            {{$postCategories->name}}
-        </a><span>{{$postCategories->posts_count}}</span></div>
+            {{$postCategory->name}}
+        </a><span>{{$postCategory->posts_count}}</span></div>
     @endforeach
 </div>

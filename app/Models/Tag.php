@@ -23,7 +23,8 @@ class Tag extends Model
     public function getFrontUrl ()
     {
         return route('front.posts.tag_posts', [
-            'tag' => $this->id
+            'tag' => $this->id,
+            'seoSlug' => $this->name
         ]);
     }
 }
