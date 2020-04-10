@@ -42,6 +42,52 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon far fa-plus-square"></i>
                         <p>
+                            @lang('Post Categories')
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.post_categories.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>@lang('Post Categories list')</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.post_categories.add')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>@lang('Add Post Category')</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-plus-square"></i>
+                        <p>
+                            @lang('Tags')
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.tags.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>@lang('Tags list')</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.tags.add')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>@lang('Add Tag')</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-plus-square"></i>
+                        <p>
                             @lang('Users')
                             <i class="right fas fa-angle-left"></i>
                         </p>

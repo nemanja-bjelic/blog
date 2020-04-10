@@ -52,7 +52,7 @@ Route::prefix('/admin')->namespace('Admin')->middleware('auth')->group(function 
         Route::get('/add', 'SlidersController@add')->name('admin.sliders.add');
         Route::post('/insert', 'SlidersController@insert')->name('admin.sliders.insert');
         Route::get('/edit/{slider}', 'SlidersController@edit')->name('admin.sliders.edit');
-        Route::post('/update{slider}', 'SlidersController@update')->name('admin.sliders.update');
+        Route::post('/update/{slider}', 'SlidersController@update')->name('admin.sliders.update');
         Route::post('/delete', 'SlidersController@delete')->name('admin.sliders.delete');
         
         Route::post('/enable', 'SlidersController@enable')->name('admin.sliders.enable');
@@ -60,6 +60,28 @@ Route::prefix('/admin')->namespace('Admin')->middleware('auth')->group(function 
         Route::post('/change-priority', 'SlidersController@changePriority')->name('admin.sliders.change_priority');
         
         Route::get('/slider-table', 'SlidersController@sliderTable')->name('admin.sliders.slider_table');
+    });
+    
+    // PostCategories Controller
+    Route::prefix('/post-categories')->group(function () {
+        Route::get('/', 'PostCategoriesController@index')->name('admin.post_categories.index');
+        Route::get('/add', 'PostCategoriesController@add')->name('admin.post_categories.add');
+        Route::post('/insert', 'PostCategoriesController@insert')->name('admin.post_categories.insert');
+        Route::get('/edit/{postCategory}', 'PostCategoriesController@edit')->name('admin.post_categories.edit');
+        Route::post('/update/{postCategory}', 'PostCategoriesController@update')->name('admin.post_categories.update');
+        Route::post('/delete', 'PostCategoriesController@delete')->name('admin.post_categories.delete');
+        
+        Route::post('/change-priority', 'PostCategoriesController@changePriority')->name('admin.post_categories.change_priority');
+    });
+    
+    // Tags Controller
+    Route::prefix('/tags')->group(function () {
+        Route::get('/', 'TagsController@index')->name('admin.tags.index');
+        Route::get('/add', 'TagsController@add')->name('admin.tags.add');
+        Route::post('/insert', 'TagsController@insert')->name('admin.tags.insert');
+        Route::get('/edit/{tag}', 'TagsController@edit')->name('admin.tags.edit');
+        Route::post('/update/{tag}', 'TagsController@update')->name('admin.tags.update');
+        Route::post('/delete', 'TagsController@delete')->name('admin.tags.delete');
     });
     
     // Users Controller

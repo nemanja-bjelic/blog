@@ -73,7 +73,7 @@
                             <table class="table table-bordered" id="entities-list-table">
                                 <thead>                  
                                     <tr>
-                                        <th style="width: 20%">#</th>
+                                        <th style="width: 10%">#</th>
                                         <th class="text-center">@lang('Photo')</th>
                                         <th style="width: 30%;">@lang('Title')</th>
                                         <th style="width: 30%;">@lang('Button Url')</th>

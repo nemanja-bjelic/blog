@@ -16,9 +16,11 @@ class PostViewsTableSeeder extends Seeder
         
         \DB::table('post_views')->truncate();
         
-        for($i = 1; $i < 15; $i++){
+        $numberOfPosts = \DB::table('posts')->count();
+        
+        for($i = 0; $i < $numberOfPosts; $i++){
             \DB::table('post_views')->insert([
-            'post_id' => rand(1, 6),
+            'post_id' => $i + 1,
             'created_at' => $faker->dateTimeThisMonth($max = 'now', $timezone = 'Europe/Belgrade'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);

@@ -152,7 +152,7 @@
                 "maxlength": 255
             },
             "phone": {
-                "required": true
+                "required": true,
                 "maxlength": 50
             }
         },
