@@ -18,6 +18,7 @@ class PostsController extends Controller
         
         
         $posts = Post::query()
+                ->where('status', 1)
                 ->with('postCategory', 'user')
                 ->orderBy('created_at', 'desc')
                 ->paginate(12)
@@ -50,6 +51,7 @@ class PostsController extends Controller
         
         $posts = Post::query()
                 ->where('post_category_id', $postCategory->id)
+                ->where('status', 1)
                 ->with(['postCategory', 'user'])
                 ->orderBy('created_at', 'desc')
                 ->paginate(12)
@@ -83,6 +85,7 @@ class PostsController extends Controller
                 ->whereHas('tags', function ($query) use($tag){
                     $query->where('tag_id', $tag->id);
                 })
+                ->where('status', 1)
                 ->with('postCategory', 'user')
                 ->orderBy('created_at', 'desc')
                 ->paginate(12)
@@ -116,6 +119,7 @@ class PostsController extends Controller
         
         $posts = Post::query()
                 ->where('user_id', $user->id)
+                ->where('status', 1)
                 ->with(['postCategory', 'user'])
                 ->orderBy('created_at', 'desc')
                 ->paginate(12)
@@ -165,12 +169,14 @@ class PostsController extends Controller
         
         $previousPost = Post::query()
                 ->where('created_at', '<', $post->created_at)
+                ->where('status', 1)
                 ->orderBy('created_at', 'desc')
                 ->first()
                 ;
         
         $nextPost = Post::query()
                 ->where('created_at', '>', $post->created_at)
+                ->where('status', 1)
                 ->orderBy('created_at', 'asc')
                 ->first()
                 ;
@@ -183,6 +189,10 @@ class PostsController extends Controller
                 ->limit(3)
                 ->pluck('post_id')
                 ->toArray();
+        
+        if ($post->status == Post::STATUS_DISABLED){
+            return abort(404);
+        }
         
         return view('front.posts.single_post', [
             'post' => $post,
@@ -262,6 +272,7 @@ class PostsController extends Controller
         
         $posts = Post::query()
                 ->orderBy('created_at', 'desc')
+                ->where('status', 1)
                 ->where('title', 'LIKE', '%' . $formData['search_term'] . '%')
                 ->orWhere('description', 'LIKE', '%' . $formData['search_term'] . '%')
                 ->orWhere('content', 'LIKE', '%' . $formData['search_term'] . '%')

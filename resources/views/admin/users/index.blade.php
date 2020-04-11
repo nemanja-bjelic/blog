@@ -120,7 +120,7 @@
 
 
     <!-- /.modal -->
-    <form action="{{route('admin.users.disable')}}" class="modal fade" id="disable-modal">
+    <form action="{{route('admin.users.disable')}}" method="post" class="modal fade" id="disable-modal">
         @csrf
         <input type="hidden" name="id" value="">
 

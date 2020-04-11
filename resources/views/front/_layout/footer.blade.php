@@ -36,7 +36,7 @@
             </div>
             <div class="col-md-4">
                 <div class="latest-posts">
-                    @foreach(\App\Models\Post::query()->orderBy('created_at')->limit(3)->get() as $post)
+                    @foreach(\App\Models\Post::query()->where('status', 1)->orderBy('created_at')->limit(3)->get() as $post)
                     <a href="{{ $post->getFrontUrl() }}">
                         <div class="post d-flex align-items-center">
                             <div class="image"><img src="{{$post->getPhotoUrl()}}" alt="{{$post->title}}" class="img-fluid"></div>

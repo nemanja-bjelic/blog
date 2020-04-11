@@ -84,6 +84,24 @@ Route::prefix('/admin')->namespace('Admin')->middleware('auth')->group(function 
         Route::post('/delete', 'TagsController@delete')->name('admin.tags.delete');
     });
     
+    // Posts Controller
+    Route::prefix('/posts')->group(function () {
+        Route::get('/', 'PostsController@index')->name('admin.posts.index');
+        Route::get('/add', 'PostsController@add')->name('admin.posts.add');
+        Route::post('/insert', 'PostsController@insert')->name('admin.posts.insert');
+        Route::get('/edit/{post}', 'PostsController@edit')->name('admin.posts.edit');
+        Route::post('/update/{post}', 'PostsController@update')->name('admin.posts.update');
+        Route::post('/delete', 'PostsController@delete')->name('admin.posts.delete');
+        
+        Route::post('/enable', 'PostsController@enable')->name('admin.posts.enable');
+        Route::post('/disable', 'PostsController@disable')->name('admin.posts.disable');
+        
+        Route::post('/important', 'PostsController@important')->name('admin.posts.important');
+        Route::post('/unimportant', 'PostsController@unimportant')->name('admin.posts.unimportant');
+        
+        Route::post('/datatable', 'PostsController@datatable')->name('admin.posts.datatable');
+    });
+    
     // Users Controller
     Route::prefix('/users')->group(function () {
         Route::get('/', 'UsersController@index')->name('admin.users.index');

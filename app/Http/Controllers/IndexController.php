@@ -19,6 +19,7 @@ class IndexController extends Controller
         
         $postsQuery = Post::query()
                 ->with(['user', 'postCategory'])
+                ->where('status', 1)
                 ;
         
         $posts = $postsQuery

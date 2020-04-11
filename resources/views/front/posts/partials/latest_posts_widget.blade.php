@@ -9,6 +9,7 @@
         @endphp
         @empty($latestPostIds)
         @foreach(App\Models\Post::query()
+                        ->where('status', 1)
                         ->orderBy('created_at', 'desc')
                         ->limit(3)
                         ->get() as $latestPost)
@@ -50,6 +51,7 @@
         @endempty
         @if(!empty($latestPostIds))
         @foreach(App\Models\Post::query()
+                        ->where('status', 1)
                         ->whereIn('id', $latestPostIds)
                         ->orderByRaw("FIELD(id, $postIds)")
                         ->get() as $latestPost)

@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    
+    const STATUS_ENABLED = 1;
+    const STATUS_DISABLED = 0;
+    
+    const IS_IMPORTANT = 1;
+    const NOT_IMPORTANT = 0;
+    
     protected $table = 'posts';
     
     protected $fillable = ['title', 'photo', 'description', 'content', 'category_id', 'user_id', 'post_tags_id',];
@@ -62,5 +69,25 @@ class Post extends Model
                 ]);
     }
     
+    public function isEnabled() 
+    {
+        return $this->status == self::STATUS_ENABLED;
+    }
+
+    public function isDisabled() 
+    {
+        return $this->status == self::STATUS_DISABLED;
+    }
+    
+    
+    public function isImportant() 
+    {
+        return $this->important == self::IS_IMPORTANT;
+    }
+
+    public function notImportant() 
+    {
+        return $this->important == self::NOT_IMPORTANT;
+    }
    
 }
