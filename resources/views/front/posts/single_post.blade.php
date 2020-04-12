@@ -69,7 +69,7 @@
                         </div>
                         <div class="post-body">
                             <p class="lead">{{ $post->description }}</p>
-                            {{ $post->content }}
+                            {!! $post->content !!}
                         </div>
                         <div class="post-tags">
                             @foreach($tags as $tag)

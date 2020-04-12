@@ -1,5 +1,9 @@
-@if(\Auth::user()->id != $user->id)
 <div class="btn-group">
+    
+    @if(\Auth::user()->id != $user->id)
+    <a href="{{ $user->getFrontUrl() }}" class="btn btn-info" target="_blank">
+        <i class="fas fa-eye"></i>
+    </a>
     <a href="{{route('admin.users.edit', ['user' => $user->id])}}" class="btn btn-info">
         <i class="fas fa-edit"></i>
     </a>
@@ -29,6 +33,7 @@
         <i class="fas fa-check"></i>
     </button>
     @endif
-@else
-<span>This is you. You can't edit yourself or change your status.</span>
-@endif
+    @else
+    <span>This is you. You can't edit yourself or change your status.</span>
+    @endif
+</div>

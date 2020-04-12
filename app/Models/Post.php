@@ -15,7 +15,7 @@ class Post extends Model
     
     protected $table = 'posts';
     
-    protected $fillable = ['title', 'photo', 'description', 'content', 'category_id', 'user_id', 'post_tags_id',];
+    protected $fillable = ['title', 'description', 'content', 'post_category_id', 'important'];
     
     public function user () 
     {
@@ -58,7 +58,24 @@ class Post extends Model
     
     public function getPhotoUrl()
     {
-        return url($this->photo);
+        if (empty($this->photo)) {
+            return url('/themes/front/img/featured-pic-1.jpeg');
+        }
+        
+        $photoUrl = url('/storage/posts/'.$this->photo);
+        
+        return $photoUrl;
+    }
+    
+    public function getPhotoThumbUrl()
+    {
+        if (empty($this->photo)) {
+            return url('/themes/front/img/small-thumbnail-1.jpg');
+        }
+        
+        $photoUrl = url('/storage/posts/thumbs/'.$this->photo);
+        
+        return $photoUrl;
     }
     
     public function getFrontUrl()
@@ -90,4 +107,30 @@ class Post extends Model
         return $this->important == self::NOT_IMPORTANT;
     }
    
+    
+    public function deletePhoto()
+	{
+		if (!$this->photo) {
+			return $this;
+		}
+		
+		$photoFilePath = public_path('/storage/posts/' . $this->photo);
+		
+		if (!is_file($photoFilePath)) {
+			
+			return $this;
+		}
+		
+		unlink($photoFilePath);
+		
+		$photoThumbPath = public_path('/storage/posts/thumbs/' . $this->photo);
+		
+		if (!is_file($photoThumbPath)) {
+			return $this;
+		}
+		
+		unlink($photoThumbPath);
+		
+		return $this;
+	}
 }

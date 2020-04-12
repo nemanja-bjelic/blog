@@ -30,11 +30,11 @@
         <!-- Navbar Menu -->
         <div id="navbarcollapse" class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a href="{{route('front.index.index')}}" class="nav-link @if(\Request::segment(1) == '') active @endif">Home</a>
+                <li class="nav-item"><a href="{{route('front.index.index')}}" class="nav-link @if(\Request::segment(1) == '') active @endif">@lang('Home')</a>
                 </li>
-                <li class="nav-item"><a href="{{route('front.posts.index')}}" class="nav-link @if(\Request::segment(1) == 'posts') @endif">@lang('Blog')</a>
+                <li class="nav-item"><a href="{{route('front.posts.index')}}" class="nav-link @if(\Request::segment(1) == 'posts') active @endif">@lang('Blog')</a>
                 </li>
-                <li class="nav-item"><a href="{{route('front.contact.index')}}" class="nav-link @if(\Request::segment(1) == 'contact') active @endif">Contact</a>
+                <li class="nav-item"><a href="{{route('front.contact.index')}}" class="nav-link @if(\Request::segment(1) == 'contact') active @endif">@lang('Contact')</a>
                 </li>
             </ul>
             <div class="navbar-text"><a href="#" class="search-btn"><i class="icon-search-1"></i></a></div>

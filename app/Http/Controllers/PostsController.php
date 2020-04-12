@@ -162,14 +162,14 @@ class PostsController extends Controller
                 ->get()
                 ;
                 
-        $comments = PostComment::query()
-                ->orderBy('created_at', 'desc')
-                ->get()
-                ;
+//        $comments = PostComment::query()
+//                ->orderBy('created_at', 'desc')
+//                ->get()
+//                ;
         
         $previousPost = Post::query()
                 ->where('created_at', '<', $post->created_at)
-                ->where('status', 1)
+                ->where('status', '=' , '1')
                 ->orderBy('created_at', 'desc')
                 ->first()
                 ;
@@ -197,7 +197,7 @@ class PostsController extends Controller
         return view('front.posts.single_post', [
             'post' => $post,
             'tags' => $tags,
-            'comments' => $comments,
+            //'comments' => $comments,
             'previousPost' => $previousPost,
             'nextPost' => $nextPost,
             'latestPostIds' => $latestPostIds
@@ -254,6 +254,7 @@ class PostsController extends Controller
     {
         $postComments = PostComment::query()
                 ->where('post_id', $post->id)
+                ->where('status', 1)
                 ->orderBy('created_at')
                 ->get()
                 ;

@@ -100,6 +100,8 @@ Route::prefix('/admin')->namespace('Admin')->middleware('auth')->group(function 
         Route::post('/unimportant', 'PostsController@unimportant')->name('admin.posts.unimportant');
         
         Route::post('/datatable', 'PostsController@datatable')->name('admin.posts.datatable');
+        
+        Route::post('/delete-photo/{post}', 'PostsController@deletePhoto')->name('admin.posts.delete_photo');
     });
     
     // Users Controller
@@ -115,5 +117,14 @@ Route::prefix('/admin')->namespace('Admin')->middleware('auth')->group(function 
         Route::post('/delete-photo/{user}', 'UsersController@deletePhoto')->name('admin.users.delete_photo');
         
         Route::post('/datatable', 'UsersController@datatable')->name('admin.users.datatable');
+    });
+    
+    // Comments Controller
+    Route::prefix('/comments')->group(function (){
+        Route::get('/', 'CommentsController@index')->name('admin.comments.index');
+        
+        Route::get('/comments-table', 'CommentsController@commentsTable')->name('admin.comments.comments_table');
+        Route::post('/enable', 'CommentsController@enable')->name('admin.comments.enable');
+        Route::post('/disable', 'CommentsController@disable')->name('admin.comments.disable');
     });
 });

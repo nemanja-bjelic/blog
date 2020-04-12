@@ -16,7 +16,7 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('photo');
+            $table->string('photo')->nullable();
             $table->text('description');
             $table->longText('content');
             $table->boolean('status')->default(1)->comment('Show if column is enabled or desabled');

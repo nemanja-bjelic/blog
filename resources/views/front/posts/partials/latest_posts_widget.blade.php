@@ -18,7 +18,7 @@
             <div class="item d-flex align-items-center">
                 <div class="image">
                     <img 
-                        src="{{$latestPost->getPhotoUrl()}}" 
+                        src="{{$latestPost->getPhotoThumbUrl()}}" 
                         alt="{{$latestPost->title}}" 
                         class="img-fluid"
                     >
@@ -60,7 +60,7 @@
             <div class="item d-flex align-items-center">
                 <div class="image">
                     <img 
-                        src="{{$latestPost->getPhotoUrl()}}" 
+                        src="{{$latestPost->getPhotoThumbUrl()}}" 
                         alt="{{$latestPost->title}}" 
                         class="img-fluid"
                     >
