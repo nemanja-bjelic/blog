@@ -1,11 +1,11 @@
 @extends('auth._layout.layout')
-
+@section('seo_title', __('Blog - Forgot password'))
 @section('content')
 
 
 <div class="login-box">
   <div class="login-logo">
-    <a href="#"><b>@lang('Cubes')</b>@lang('School')</a>
+    <a href="#"><b>Blog</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

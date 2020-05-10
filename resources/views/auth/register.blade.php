@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('seo_title', __('Blog - Register'))
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

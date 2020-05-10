@@ -1,5 +1,5 @@
 @extends('auth._layout.layout')
-
+@section('seo_title', __('Blog - Reset Password'))
 @section('content')
     
 <div class="login-box">

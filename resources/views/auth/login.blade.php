@@ -1,17 +1,17 @@
 @extends('auth._layout.layout')
-
+@section('seo_title', __('Blog - Login'))
 @section('content')
 
 <!-- NEW HTML -->
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>Cubes</b>School</a>
+        <a href="#"><b>Blog</b></a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">@lang('Sign in to start your session')</p>
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf
@@ -77,7 +77,7 @@
             </form>
 
             <p class="mb-1">
-                <a href="{{ route('password.request') }}">I forgot my password</a>
+                <a href="{{ route('password.request') }}">@lang('I forgot my password')</a>
             </p>
         </div>
         <!-- /.login-card-body -->

@@ -127,4 +127,17 @@ Route::prefix('/admin')->namespace('Admin')->middleware('auth')->group(function 
         Route::post('/enable', 'CommentsController@enable')->name('admin.comments.enable');
         Route::post('/disable', 'CommentsController@disable')->name('admin.comments.disable');
     });
+    
+    //Routes for ProfileController
+    Route::prefix('/profile')->group(function () {
+        
+        
+        Route::get('/edit', 'ProfileController@edit')->name('admin.profile.edit');
+        Route::post('/update', 'ProfileController@update')->name('admin.profile.update');
+        
+		Route::post('/delete-photo/{user}', 'ProfileController@deletePhoto')->name('admin.profile.delete_photo');
+		
+		Route::get('/change-password', 'ProfileController@changePassword')->name('admin.profile.change_password');
+		Route::post('/change-password', 'ProfileController@changePasswordConfirm')->name('admin.profile.change_password_confirm');
+    });
 });
